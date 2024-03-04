@@ -1,0 +1,105 @@
+---
+title: 'Couscous: A Causal Inference Cookbook in R'
+author: "Theo Obadiah Teguh"
+date: "`r Sys.Date()`"
+site: bookdown::bookdown_site
+output: bookdown::gitbook
+documentclass: book
+biblio-style: apalike
+link-citations: yes
+github-repo: rstudio/bookdown-demo
+description: "This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook."
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# Preface {-}
+
+After a few years in my undergraduate economics program, I grew interest in the field of programming. I felt that in the real world, the concepts and theories in the field of economics and finance are brought alive with data. Times are changing, and the ability to code and create elegant computer scripts will be very useful, especially when handling data sets and conducting analysis.
+
+I realized that unless you were on your way towards a computer or data science degree, there wasn't really a concrete way of getting used to working with data and programming on your own free time. Additionally, I wanted the content of this book to assist my fellow students in my program. 
+
+<br />
+<center>
+![*Data: the way you see it in movies*](~/Desktop/Projects/Couscous/images/thumbnail.jpeg){#id .class width=75% height=75%}
+</center>
+<br />
+
+Therefore, I compiled this book. The purpose of this book is to storehouse all the foundations you need as a fresh beginner in statistical programming. Whether you are an undergraduate or postgraduate, this book will help you get started with R language programming and data analysis. This book will also dive deeper into the methodologies of causal inference, which will be particularly useful for final year research projects, postgraduate statistical studies, and research.
+
+The content of this book is based on certain lectures and coursework that I have received throughout university, my personal study notes, as well as publicly available sources that I have encountered and used in my journey.
+
+I believe anyone can code with R, but the question is how and where should one start?  
+
+> ***Couscous*** (a pun of 'cause-cause') aims to be the solution for you. 
+
+By the end of reading this book, you will be able to use the R language effectively for causal inference. 
+
+# Usage of this book {-}
+This book is meant to be used as a supplement to your coursework in university. It covers the basics of the R programming language and important libraries such as `tidyverse`, `knitr`, and `stargazer`.
+
+It will also cover certain statistical topics such as econometric foundations, Randomized Controlled Trials (RCT), Instrumental Variables (IV), Regression Discontinuity Design (RDD), and Difference-in-Differences (DiD).
+
+It is recommended to go through the chapters of this book in order, as early chapters serve as a foundation for the later sections.
+
+There will also be *recommended* and *supplementary* materials sections throughout the book. 
+
+- The ***recommended materials*** section is provided with hopes of strengthening certain concepts. They will be very significant and helpful for your understanding. 
+- The ***supplementary materials*** section aims to provide you with additional context on topics that you are interested in.
+
+Related exercises will be provided in sections of the book. They are sourced from other textbooks and problem sets available online.
+
+# Software Information {-}
+This is an overview of the different types of software we use in this book.
+
+**R** is a free software environment for statistical computing and graphics, that can be downloaded [online](https://www.r-project.org/).
+
+**R Studio** is a well-known Integrated Development Environment (IDE) for R. If you don't know what that means, it's just basically where you type in your code and see the targeted outputs. This software is also available for free [online](https://posit.co/download/rstudio-desktop/).
+
+**R Markdown** is a powerful tool that can be used alongside R Studio to create beautiful documents and format them neatly in PDF, HTML, or other formats. Though not compulsory, it is highly recommended for you to learn about this software as it is quite easy to pickup once you understand R syntax, and the results can be spectacular. You can also check out the documentation [online](https://rmarkdown.rstudio.com/).
+
+Finally, this book was created with **R Bookdown**, which compiles your R Markdown files into production-ready booklets. It is completely free and the documentation is available [online](https://bookdown.org/). Knowledge of this is not required.
+
+# Acknowledgments {-}
+This book was mainly inspired by [Dr. Yanhui Wu's](https://www.hkubs.hku.hk/people/yanhui-wu) course: ECON3284 Causal Inference. I took this course in the 2023 Fall Semester with the goal of overcoming my fear of statistics. It was a terrific experience with stellar teaching, and I got to meet a lot of new like-minded friends and colleagues.
+
+<br />
+<center>
+![*Dr. Yanhui Wu, University of Hong Kong*](~/Desktop/Projects/Couscous/images/acknowledgements_1.jpeg){#id .class width=60% height=60%}
+</center>
+<br />
+
+Additionally, the book utilizes a lot of ideas and concepts from the *Introduction to Data Science* and *Advanced Data Science* textbooks by HarvardX. These books are available for free [online](https://rafalab.dfci.harvard.edu/dsbook-part-1/), and were used in the course: COMP2501 Introduction to Data Science and Engineering at the University of Hong Kong.
+
+<br />
+<center>
+![*Introduction to Data Science, HarvardX*](~/Desktop/Projects/Couscous/images/acknowledgements_2.jpg){#id .class width=35% height=35%}
+</center>
+<br />
+
+Finally, the videos embedded throughout this book are sourced from the [StatQuest Youtube Channel](https://www.youtube.com/@statquest) by [Josh Starmer](https://statquest.org/about/). His videos have been a lifesaver for myself and a lot of my friends.
+
+<br />
+<center>
+![*Josh Starmer, StatQuest*](~/Desktop/Projects/Couscous/images/acknowledgements_3.jpeg){#id .class width=50% height=50%}
+</center>
+<br />
+
+# About the Author {-}
+
+Theo Obadiah Teguh is a student in the Bachelor of Economics and Finance program by the University of Hong Kong (HKU). He is interested in quantitative research and statistical analysis, and is taking computer science as a second major. 
+
+<br />
+<center>
+![](~/Desktop/Projects/Couscous/images/author.jpg){#id .class width=40% height=40%}
+</center>
+<br />
+
+He worked as a data research assistant at the Faculty of Business and Economics at HKU under the supervision of [Dr. Yang Liu](https://www.hkubs.hku.hk/people/yang-liu/) alongside other PhD students, and has assisted in projects related to XML scraping, machine learning, and data engineering.
+
+In the fall semester of 2023, he worked as a Student Teaching Assistant for the Department of Computer Science, and studied causal inference under the guidance of [Dr. Yanhui Wu](https://www.hkubs.hku.hk/people/yanhui-wu). 
+
+He loves spicy Indian and Sichuan food, as much as basketball.  
+You can find him on [GitHub](https://github.com/theo-obadiah-teguh) and [LinkedIn](https://www.linkedin.com/in/theo-obadiah-teguh).  

@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>1 Statistics and Regression with R | Couscous: A Practical Guide to Causal Inference</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="1 Statistics and Regression with R | Couscous: A Practical Guide to Causal Inference" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="1 Statistics and Regression with R | Couscous: A Practical Guide to Causal Inference" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Theo Obadiah Teguh" />
+
+
+<meta name="date" content="2023-12-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="index.html"/>
+<link rel="next" href="rct.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="1" data-path="intro.html"><a href="intro.html"><i class="fa fa-check"></i><b>1</b> Statistics and Regression with R</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="intro.html"><a href="intro.html#linear-regression"><i class="fa fa-check"></i><b>1.1</b> Linear Regression</a></li>
+<li class="chapter" data-level="1.2" data-path="intro.html"><a href="intro.html#multiple-linear-regression"><i class="fa fa-check"></i><b>1.2</b> Multiple Linear Regression</a></li>
+<li class="chapter" data-level="1.3" data-path="intro.html"><a href="intro.html#adding-interaction-variables"><i class="fa fa-check"></i><b>1.3</b> Adding Interaction Variables</a>
+<ul>
+<li class="chapter" data-level="1.3.1" data-path="intro.html"><a href="intro.html#putting-it-all-together"><i class="fa fa-check"></i><b>1.3.1</b> Putting it All Together</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="rct.html"><a href="rct.html"><i class="fa fa-check"></i><b>2</b> Randomized Controlled Trials</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="rct.html"><a href="rct.html#section-1-conceptual-questions"><i class="fa fa-check"></i><b>2.1</b> Section 1 (Conceptual Questions)</a>
+<ul>
+<li class="chapter" data-level="2.1.1" data-path="rct.html"><a href="rct.html#the-effect-of-online-education"><i class="fa fa-check"></i><b>2.1.1</b> The Effect of Online Education</a></li>
+</ul></li>
+<li class="chapter" data-level="2.2" data-path="rct.html"><a href="rct.html#section-2-applied-problems"><i class="fa fa-check"></i><b>2.2</b> Section 2 (Applied Problems)</a>
+<ul>
+<li class="chapter" data-level="2.2.1" data-path="rct.html"><a href="rct.html#setup"><i class="fa fa-check"></i><b>2.2.1</b> Setup</a></li>
+<li class="chapter" data-level="2.2.2" data-path="rct.html"><a href="rct.html#question-1"><i class="fa fa-check"></i><b>2.2.2</b> Question 1</a></li>
+<li class="chapter" data-level="2.2.3" data-path="rct.html"><a href="rct.html#question-2"><i class="fa fa-check"></i><b>2.2.3</b> Question 2</a></li>
+<li class="chapter" data-level="2.2.4" data-path="rct.html"><a href="rct.html#question-3"><i class="fa fa-check"></i><b>2.2.4</b> Question 3</a></li>
+<li class="chapter" data-level="2.2.5" data-path="rct.html"><a href="rct.html#question-4"><i class="fa fa-check"></i><b>2.2.5</b> Question 4</a></li>
+</ul></li>
+<li class="chapter" data-level="2.3" data-path="rct.html"><a href="rct.html#section-3-critical-thinking"><i class="fa fa-check"></i><b>2.3</b> Section 3 (Critical Thinking)</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="iv.html"><a href="iv.html"><i class="fa fa-check"></i><b>3</b> Instrumental Variables</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="iv.html"><a href="iv.html#section-1-conceptual-questions-1"><i class="fa fa-check"></i><b>3.1</b> Section 1: Conceptual Questions</a>
+<ul>
+<li class="chapter" data-level="3.1.1" data-path="iv.html"><a href="iv.html#question-1-1"><i class="fa fa-check"></i><b>3.1.1</b> Question 1</a></li>
+<li class="chapter" data-level="3.1.2" data-path="iv.html"><a href="iv.html#question-2-1"><i class="fa fa-check"></i><b>3.1.2</b> Question 2</a></li>
+<li class="chapter" data-level="3.1.3" data-path="iv.html"><a href="iv.html#question-3-1"><i class="fa fa-check"></i><b>3.1.3</b> Question 3</a></li>
+</ul></li>
+<li class="chapter" data-level="3.2" data-path="iv.html"><a href="iv.html#section-2-applied-problems-1"><i class="fa fa-check"></i><b>3.2</b> Section 2: Applied Problems</a>
+<ul>
+<li class="chapter" data-level="3.2.1" data-path="iv.html"><a href="iv.html#question-1-iv-regression-with-simulated-data"><i class="fa fa-check"></i><b>3.2.1</b> Question 1 (IV Regression with Simulated Data)</a></li>
+<li class="chapter" data-level="3.2.2" data-path="iv.html"><a href="iv.html#question-2-colonial-origins-of-comparative-development-ajr"><i class="fa fa-check"></i><b>3.2.2</b> Question 2 (Colonial Origins of Comparative Development, AJR)</a></li>
+</ul></li>
+</ul></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Couscous: A Practical Guide to Causal Inference</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="intro" class="section level1 hasAnchor" number="1">
+<h1><span class="header-section-number">1</span> Statistics and Regression with R<a href="intro.html#intro" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<p>Before we start doing any analysis, let’s setup our working directory. Moreover,
+because the data sets we’ll be working with are relatively small, we can just
+load both files and assign them to two unique variables.</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="intro.html#cb1-1" tabindex="-1"></a><span class="co"># Here we setup our working directory, i.e. the location of the folder we are using</span></span>
+<span id="cb1-2"><a href="intro.html#cb1-2" tabindex="-1"></a><span class="fu">setwd</span>(<span class="st">&quot;/Users/theoobadiahteguh/R_Programming/ECON3284/ProblemSet1&quot;</span>)</span>
+<span id="cb1-3"><a href="intro.html#cb1-3" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="intro.html#cb1-4" tabindex="-1"></a><span class="co"># Now we combine the directory path and the file name to obtain the full path</span></span>
+<span id="cb1-5"><a href="intro.html#cb1-5" tabindex="-1"></a>advertising <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">&quot;Advertising.csv&quot;</span>))</span>
+<span id="cb1-6"><a href="intro.html#cb1-6" tabindex="-1"></a>auto <span class="ot">&lt;-</span> <span class="fu">read.csv</span>(<span class="fu">file.path</span>(<span class="fu">getwd</span>(), <span class="st">&quot;Auto.csv&quot;</span>))</span></code></pre></div>
+<p>Now that we have loaded the data, we can begin our analysis and answer the
+questions in the second section.</p>
+<div id="linear-regression" class="section level2 hasAnchor" number="1.1">
+<h2><span class="header-section-number">1.1</span> Linear Regression<a href="intro.html#linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>For questions 1 to 3 we will use the “Advertising” data set. Let’s first see the structure of the data:</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="intro.html#cb2-1" tabindex="-1"></a><span class="fu">str</span>(auto)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    392 obs. of  9 variables:
+##  $ mpg         : num  18 15 18 16 17 15 14 14 14 15 ...
+##  $ cylinders   : int  8 8 8 8 8 8 8 8 8 8 ...
+##  $ displacement: num  307 350 318 304 302 429 454 440 455 390 ...
+##  $ horsepower  : int  130 165 150 150 140 198 220 215 225 190 ...
+##  $ weight      : int  3504 3693 3436 3433 3449 4341 4354 4312 4425 3850 ...
+##  $ acceleration: num  12 11.5 11 12 10.5 10 9 8.5 10 8.5 ...
+##  $ year        : int  70 70 70 70 70 70 70 70 70 70 ...
+##  $ origin      : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ name        : chr  &quot;chevrolet chevelle malibu&quot; &quot;buick skylark 320&quot; &quot;plymouth satellite&quot; &quot;amc rebel sst&quot; ...</code></pre>
+<p>Let us now create the model in our R environment and create a plot to
+visualize the data with the model:</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="intro.html#cb4-1" tabindex="-1"></a>model_q1 <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales <span class="sc">~</span> TV, advertising)</span>
+<span id="cb4-2"><a href="intro.html#cb4-2" tabindex="-1"></a></span>
+<span id="cb4-3"><a href="intro.html#cb4-3" tabindex="-1"></a><span class="fu">attach</span>(advertising)</span>
+<span id="cb4-4"><a href="intro.html#cb4-4" tabindex="-1"></a><span class="fu">plot</span>(TV, sales, <span class="at">xlab =</span> <span class="st">&quot;TV Advertising Budget&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Sales&quot;</span>)</span>
+<span id="cb4-5"><a href="intro.html#cb4-5" tabindex="-1"></a><span class="fu">abline</span>(model_q1, <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-3-1.png" width="672" /></p>
+<p>We can also generate a summary of the model:</p>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="intro.html#cb5-1" tabindex="-1"></a><span class="fu">summary</span>(model_q1)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = sales ~ TV, data = advertising)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.3860 -1.9545 -0.1913  2.0671  7.2124 
+## 
+## Coefficients:
+##             Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 7.032594   0.457843   15.36   &lt;2e-16 ***
+## TV          0.047537   0.002691   17.67   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.259 on 198 degrees of freedom
+## Multiple R-squared:  0.6119, Adjusted R-squared:  0.6099 
+## F-statistic: 312.1 on 1 and 198 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>From this summary we can answer parts (a) to (c):<br />
+a.) Beta(1) = 0.047537<br />
+b.) Standard Error of Beta(1) = 0.002691<br />
+c.) The t-statistic of Beta(1) = 17.67 and it is statistically significant as it has a p-value smaller than 0.001, and thus we reject the null hypothesis.<br />
+d.) If there is zero budget for TV Advertising, then the sales will simply be the
+y-intercept of the model, that is equal to 7.032594.<br />
+e.) Finally the R-Squared is 0.6119 and we can interpret it as “61.19% of the
+change in sales can be explained by the variability of TV Advertising.”<br />
+</p>
+</div>
+<div id="multiple-linear-regression" class="section level2 hasAnchor" number="1.2">
+<h2><span class="header-section-number">1.2</span> Multiple Linear Regression<a href="intro.html#multiple-linear-regression" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let us now create the second model. We will not visualize this model but we can
+still generate a cohesive summary.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="intro.html#cb7-1" tabindex="-1"></a>model_q2 <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales <span class="sc">~</span> TV <span class="sc">+</span> radio <span class="sc">+</span> newspaper, advertising)</span>
+<span id="cb7-2"><a href="intro.html#cb7-2" tabindex="-1"></a><span class="fu">summary</span>(model_q2)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = sales ~ TV + radio + newspaper, data = advertising)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -8.8277 -0.8908  0.2418  1.1893  2.8292 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  2.938889   0.311908   9.422   &lt;2e-16 ***
+## TV           0.045765   0.001395  32.809   &lt;2e-16 ***
+## radio        0.188530   0.008611  21.893   &lt;2e-16 ***
+## newspaper   -0.001037   0.005871  -0.177     0.86    
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 1.686 on 196 degrees of freedom
+## Multiple R-squared:  0.8972, Adjusted R-squared:  0.8956 
+## F-statistic: 570.3 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>Thus, we can answer the questions based on the summary:</p>
+<p>a.) Estimated beta(2) = 0.188530<br />
+b.) Standard error of beta(3): = 0.005871<br />
+c.) The t-statistic of beta(3) = -0.177 and the p-value is much larger than 0.1,
+so we fail to reject the null hypothesis and it is not statistically significant.<br />
+d.) Adjusted R-Squared = 0.8956 and it can be explained as “the variability of Y that can be explained by the regression model, i.e. the variability of X1, X2, and X3”. In other words, 89.56% of the variability of Sales can be explained by the TV, Radio, and Newspaper variables.<br />
+e.) The F-statistic = 570.3 and as the p-value of F-statistic value is nearly 0 which is much smaller than 0.001, we can conclude that at least one of the coefficients is non-zero.<br />
+</p>
+</div>
+<div id="adding-interaction-variables" class="section level2 hasAnchor" number="1.3">
+<h2><span class="header-section-number">1.3</span> Adding Interaction Variables<a href="intro.html#adding-interaction-variables" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Let us now create the third model. Again, we will not visualize this model but
+we can still generate a cohesive summary.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="intro.html#cb9-1" tabindex="-1"></a>model_q3 <span class="ot">&lt;-</span> <span class="fu">lm</span>(sales <span class="sc">~</span> TV <span class="sc">+</span> radio <span class="sc">+</span> TV <span class="sc">:</span> radio, advertising)</span>
+<span id="cb9-2"><a href="intro.html#cb9-2" tabindex="-1"></a><span class="fu">summary</span>(model_q3)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = sales ~ TV + radio + TV:radio, data = advertising)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -6.3366 -0.4028  0.1831  0.5948  1.5246 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 6.750e+00  2.479e-01  27.233   &lt;2e-16 ***
+## TV          1.910e-02  1.504e-03  12.699   &lt;2e-16 ***
+## radio       2.886e-02  8.905e-03   3.241   0.0014 ** 
+## TV:radio    1.086e-03  5.242e-05  20.727   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 0.9435 on 196 degrees of freedom
+## Multiple R-squared:  0.9678, Adjusted R-squared:  0.9673 
+## F-statistic:  1963 on 3 and 196 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>From this summary we can answer part (a), and find the value of beta(3) in the following manner so that it is readable:</p>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="intro.html#cb11-1" tabindex="-1"></a><span class="fu">summary</span>(model_q3)<span class="sc">$</span>coefficients[<span class="dv">4</span>]</span></code></pre></div>
+<pre><code>## [1] 0.001086495</code></pre>
+<p>And then, we can calculate part (b) as follows:</p>
+<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb13-1"><a href="intro.html#cb13-1" tabindex="-1"></a><span class="dv">5</span> <span class="sc">*</span> <span class="fu">summary</span>(model_q3)<span class="sc">$</span>coefficients[<span class="dv">3</span>] <span class="sc">+</span> <span class="fu">summary</span>(model_q3)<span class="sc">$</span>coefficients[<span class="dv">4</span>] <span class="sc">*</span> <span class="dv">200</span> <span class="sc">*</span> <span class="dv">5</span> </span></code></pre></div>
+<pre><code>## [1] 1.230796</code></pre>
+<div id="putting-it-all-together" class="section level3 hasAnchor" number="1.3.1">
+<h3><span class="header-section-number">1.3.1</span> Putting it All Together<a href="intro.html#putting-it-all-together" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now, for this question we will use the “Auto” data set. Let’s first see the structure of the data:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="intro.html#cb15-1" tabindex="-1"></a><span class="fu">str</span>(auto)</span></code></pre></div>
+<pre><code>## &#39;data.frame&#39;:    392 obs. of  9 variables:
+##  $ mpg         : num  18 15 18 16 17 15 14 14 14 15 ...
+##  $ cylinders   : int  8 8 8 8 8 8 8 8 8 8 ...
+##  $ displacement: num  307 350 318 304 302 429 454 440 455 390 ...
+##  $ horsepower  : int  130 165 150 150 140 198 220 215 225 190 ...
+##  $ weight      : int  3504 3693 3436 3433 3449 4341 4354 4312 4425 3850 ...
+##  $ acceleration: num  12 11.5 11 12 10.5 10 9 8.5 10 8.5 ...
+##  $ year        : int  70 70 70 70 70 70 70 70 70 70 ...
+##  $ origin      : int  1 1 1 1 1 1 1 1 1 1 ...
+##  $ name        : chr  &quot;chevrolet chevelle malibu&quot; &quot;buick skylark 320&quot; &quot;plymouth satellite&quot; &quot;amc rebel sst&quot; ...</code></pre>
+<p>a.) We will now create a linear model with mpg as the response and horsepower as the predictor, and generate a summary</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="intro.html#cb17-1" tabindex="-1"></a><span class="co"># Creating the model</span></span>
+<span id="cb17-2"><a href="intro.html#cb17-2" tabindex="-1"></a>model_q4a <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> horsepower, auto)</span>
+<span id="cb17-3"><a href="intro.html#cb17-3" tabindex="-1"></a></span>
+<span id="cb17-4"><a href="intro.html#cb17-4" tabindex="-1"></a><span class="co"># Generating the summary</span></span>
+<span id="cb17-5"><a href="intro.html#cb17-5" tabindex="-1"></a><span class="fu">summary</span>(model_q4a)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ horsepower, data = auto)
+## 
+## Residuals:
+##      Min       1Q   Median       3Q      Max 
+## -13.5710  -3.2592  -0.3435   2.7630  16.9240 
+## 
+## Coefficients:
+##              Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept) 39.935861   0.717499   55.66   &lt;2e-16 ***
+## horsepower  -0.157845   0.006446  -24.49   &lt;2e-16 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 4.906 on 390 degrees of freedom
+## Multiple R-squared:  0.6059, Adjusted R-squared:  0.6049 
+## F-statistic: 599.7 on 1 and 390 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>From the summary, we can clearly see that:<br />
+i.) There is a relationship between our predictor and response, and our predictor is statistically significant as the p-value is less than 0.001.<br />
+ii.) We see that the value of R-Squared is 0.6059, and the relationship is somewhat at moderate strength.<br />
+iii.) The relationship is a negative relationship, as reflected by beta(horsepower) of -0.157845.<br />
+iv.) If we have 98 horsepower then we would predict the mpg to be:</p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb19-1"><a href="intro.html#cb19-1" tabindex="-1"></a><span class="fu">summary</span>(model_q4a)<span class="sc">$</span> coefficients[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">98</span> <span class="sc">*</span> <span class="fu">summary</span>(model_q4a)<span class="sc">$</span>coefficients[<span class="dv">2</span>]</span></code></pre></div>
+<pre><code>## [1] 24.46708</code></pre>
+<p>Additionally, we can also calculate the 95% confidence intervals:</p>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb21-1"><a href="intro.html#cb21-1" tabindex="-1"></a><span class="co"># We can use this for the confidence interval of the model</span></span>
+<span id="cb21-2"><a href="intro.html#cb21-2" tabindex="-1"></a><span class="fu">confint</span>(model_q4a, <span class="at">level =</span>  <span class="fl">0.95</span>)</span></code></pre></div>
+<pre><code>##                 2.5 %     97.5 %
+## (Intercept) 38.525212 41.3465103
+## horsepower  -0.170517 -0.1451725</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb23-1"><a href="intro.html#cb23-1" tabindex="-1"></a><span class="co"># We can use this for the confidence interval of the prediction if we have 98 horsepower</span></span>
+<span id="cb23-2"><a href="intro.html#cb23-2" tabindex="-1"></a><span class="co"># We can input the values of one or more predictors in the data frame</span></span>
+<span id="cb23-3"><a href="intro.html#cb23-3" tabindex="-1"></a><span class="fu">predict</span>(model_q4a, <span class="fu">data.frame</span>(<span class="at">horsepower =</span> <span class="dv">98</span>), <span class="at">interval =</span> <span class="st">&quot;confidence&quot;</span>)</span></code></pre></div>
+<pre><code>##        fit      lwr      upr
+## 1 24.46708 23.97308 24.96108</code></pre>
+<p>b.) We can also plot our model as follows:</p>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb25-1"><a href="intro.html#cb25-1" tabindex="-1"></a><span class="fu">attach</span>(auto)</span>
+<span id="cb25-2"><a href="intro.html#cb25-2" tabindex="-1"></a><span class="fu">plot</span>(horsepower, mpg, <span class="at">xlab =</span> <span class="st">&quot;Horsepower&quot;</span>, <span class="at">ylab =</span> <span class="st">&quot;Miles per Gallon&quot;</span>)</span>
+<span id="cb25-3"><a href="intro.html#cb25-3" tabindex="-1"></a><span class="fu">abline</span>(model_q4a, <span class="at">col =</span> <span class="st">&quot;navy&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-13-1.png" width="672" /></p>
+<p>c.) We will now create diagnostic plots. To do this, we use the broom library:</p>
+<div class="sourceCode" id="cb26"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb26-1"><a href="intro.html#cb26-1" tabindex="-1"></a><span class="fu">library</span>(broom)</span>
+<span id="cb26-2"><a href="intro.html#cb26-2" tabindex="-1"></a></span>
+<span id="cb26-3"><a href="intro.html#cb26-3" tabindex="-1"></a>model.diag.metrics <span class="ot">&lt;-</span> <span class="fu">augment</span>(model_q4a)</span>
+<span id="cb26-4"><a href="intro.html#cb26-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb26-5"><a href="intro.html#cb26-5" tabindex="-1"></a><span class="fu">plot</span>(model_q4a)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-14-1.png" width="672" /></p>
+<p>There are a few things that have been highlighted by the diagnostic plots:<br />
+1.) The <strong>Residuals vs Fitted</strong> plot has a slightly curved convex line, suggesting
+that the relationship may not be linear.<br />
+2.) The <strong>Normal Q-Q</strong> plot shows that the residual points follow the straight dashed line relatively well, although it is also slightly convex in shape. This suggests that the residuals may not completely follow a normal distribution.<br />
+3.) The <strong>Scale-Location (or Spread-Location)</strong> plot shows a convex or bent v-shaped line with a high concentration of points on the right, suggesting that we may have a heteroscedasticity problem.<br />
+4.) The <strong>Residuals vs Leverage</strong> plot shows that there aren’t any “influential” variables.</p>
+<p>d.) We will now create a scatter plot matrix with base R:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb27-1"><a href="intro.html#cb27-1" tabindex="-1"></a><span class="fu">plot</span>(auto)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-15-1.png" width="672" /></p>
+<p>Alternatively, a more reasonable and tidier way is to use the function pairs(), and we must exclude the “name” variable as it is qualitative:</p>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="intro.html#cb28-1" tabindex="-1"></a><span class="co"># We can set the plotting &quot;character&quot; with the pch value</span></span>
+<span id="cb28-2"><a href="intro.html#cb28-2" tabindex="-1"></a><span class="fu">pairs</span>(auto[,<span class="sc">-</span><span class="dv">9</span>], <span class="at">pch =</span> <span class="dv">18</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-16-1.png" width="672" /></p>
+<p>e.) We can also create a matrix of correlations and visualize it with the corrplot library:</p>
+<div class="sourceCode" id="cb29"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb29-1"><a href="intro.html#cb29-1" tabindex="-1"></a><span class="co"># We exclude the &quot;name&quot; column from the data frame</span></span>
+<span id="cb29-2"><a href="intro.html#cb29-2" tabindex="-1"></a>corr_matrix <span class="ot">&lt;-</span> <span class="fu">cor</span>(auto[, <span class="sc">-</span><span class="dv">9</span>])</span>
+<span id="cb29-3"><a href="intro.html#cb29-3" tabindex="-1"></a>corr_matrix</span></code></pre></div>
+<pre><code>##                     mpg  cylinders displacement horsepower     weight
+## mpg           1.0000000 -0.7776175   -0.8051269 -0.7784268 -0.8322442
+## cylinders    -0.7776175  1.0000000    0.9508233  0.8429834  0.8975273
+## displacement -0.8051269  0.9508233    1.0000000  0.8972570  0.9329944
+## horsepower   -0.7784268  0.8429834    0.8972570  1.0000000  0.8645377
+## weight       -0.8322442  0.8975273    0.9329944  0.8645377  1.0000000
+## acceleration  0.4233285 -0.5046834   -0.5438005 -0.6891955 -0.4168392
+## year          0.5805410 -0.3456474   -0.3698552 -0.4163615 -0.3091199
+## origin        0.5652088 -0.5689316   -0.6145351 -0.4551715 -0.5850054
+##              acceleration       year     origin
+## mpg             0.4233285  0.5805410  0.5652088
+## cylinders      -0.5046834 -0.3456474 -0.5689316
+## displacement   -0.5438005 -0.3698552 -0.6145351
+## horsepower     -0.6891955 -0.4163615 -0.4551715
+## weight         -0.4168392 -0.3091199 -0.5850054
+## acceleration    1.0000000  0.2903161  0.2127458
+## year            0.2903161  1.0000000  0.1815277
+## origin          0.2127458  0.1815277  1.0000000</code></pre>
+<div class="sourceCode" id="cb31"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb31-1"><a href="intro.html#cb31-1" tabindex="-1"></a><span class="fu">library</span>(corrplot)</span></code></pre></div>
+<pre><code>## corrplot 0.92 loaded</code></pre>
+<div class="sourceCode" id="cb33"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb33-1"><a href="intro.html#cb33-1" tabindex="-1"></a><span class="co"># Generating the matrix visualization</span></span>
+<span id="cb33-2"><a href="intro.html#cb33-2" tabindex="-1"></a><span class="fu">corrplot</span>(corr_matrix, <span class="at">method =</span> <span class="st">&quot;color&quot;</span>)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-18-1.png" width="672" /></p>
+<p>f.) Finally we can create a multiple linear regression model from the Auto data set and generate its summary:</p>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="intro.html#cb34-1" tabindex="-1"></a><span class="co"># Here we include every variable except for &quot;name&quot;</span></span>
+<span id="cb34-2"><a href="intro.html#cb34-2" tabindex="-1"></a>model_q4f <span class="ot">&lt;-</span> <span class="fu">lm</span>(mpg <span class="sc">~</span> .<span class="sc">-</span>name, auto)</span>
+<span id="cb34-3"><a href="intro.html#cb34-3" tabindex="-1"></a><span class="fu">summary</span>(model_q4f)</span></code></pre></div>
+<pre><code>## 
+## Call:
+## lm(formula = mpg ~ . - name, data = auto)
+## 
+## Residuals:
+##     Min      1Q  Median      3Q     Max 
+## -9.5903 -2.1565 -0.1169  1.8690 13.0604 
+## 
+## Coefficients:
+##                Estimate Std. Error t value Pr(&gt;|t|)    
+## (Intercept)  -17.218435   4.644294  -3.707  0.00024 ***
+## cylinders     -0.493376   0.323282  -1.526  0.12780    
+## displacement   0.019896   0.007515   2.647  0.00844 ** 
+## horsepower    -0.016951   0.013787  -1.230  0.21963    
+## weight        -0.006474   0.000652  -9.929  &lt; 2e-16 ***
+## acceleration   0.080576   0.098845   0.815  0.41548    
+## year           0.750773   0.050973  14.729  &lt; 2e-16 ***
+## origin         1.426141   0.278136   5.127 4.67e-07 ***
+## ---
+## Signif. codes:  0 &#39;***&#39; 0.001 &#39;**&#39; 0.01 &#39;*&#39; 0.05 &#39;.&#39; 0.1 &#39; &#39; 1
+## 
+## Residual standard error: 3.328 on 384 degrees of freedom
+## Multiple R-squared:  0.8215, Adjusted R-squared:  0.8182 
+## F-statistic: 252.4 on 7 and 384 DF,  p-value: &lt; 2.2e-16</code></pre>
+<p>We can now answer the following sections:<br />
+i.) There is a relationship between the predictors and the response. The model has an F-statistic of 252.4 with a p-value of less than 0.001 classifying it as statistically significant. Moreover, the relationship of the predictors and the response is quite strong as the adjusted R-Squared value is 0.8182.<br />
+ii.) The “displacement” predictor is statistically significant with a p-value less than 0.01. We also have weight, year, and origin with p-values smaller than 0.001.<br />
+iii.) The year coefficient suggests that over time, the number of miles per gallon increases. This makes sense because as time passes we expect technological improvement such that engines become more efficient.<br />
+</p>
+<p>g.) We then plot the diagnostic plots as we did in a previous section:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="intro.html#cb36-1" tabindex="-1"></a><span class="co"># library(broom)</span></span>
+<span id="cb36-2"><a href="intro.html#cb36-2" tabindex="-1"></a></span>
+<span id="cb36-3"><a href="intro.html#cb36-3" tabindex="-1"></a>model.diag.metrics <span class="ot">&lt;-</span> <span class="fu">augment</span>(model_q4f)</span>
+<span id="cb36-4"><a href="intro.html#cb36-4" tabindex="-1"></a><span class="fu">par</span>(<span class="at">mfrow =</span> <span class="fu">c</span>(<span class="dv">2</span>, <span class="dv">2</span>))</span>
+<span id="cb36-5"><a href="intro.html#cb36-5" tabindex="-1"></a><span class="fu">plot</span>(model_q4f)</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-20-1.png" width="672" /></p>
+<p>There are a few things that have been highlighted by the diagnostic plots:<br />
+1.) The <strong>Residuals vs Fitted</strong> plot has a slightly curved convex line, suggesting
+that the relationship may not be linear.<br />
+2.) The <strong>Normal Q-Q</strong> plot shows that the residual points somewhat follow the straight dashed line, although it deviates upward on the right side of the plot. This suggests that the residuals may not completely follow a normal distribution.<br />
+3.) The <strong>Scale-Location (or Spread-Location)</strong> plot shows a no perfectly straight horizontal line with a high concentration of points on the middle and the right, suggesting that we may have a heteroscedasticity problem.<br />
+4.) The <strong>Residuals vs Leverage</strong> plot shows that there aren’t any “influential” variables, as no observation falls outside the Cook’s distance line.</p>
+<p>Thus, we conclude this first problem set.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="index.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="rct.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+</body>
+
+</html>

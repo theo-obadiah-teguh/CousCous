@@ -1,0 +1,1444 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>4 Randomized Controlled Trials | Couscous: A Causal Inference Cookbook in R</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown 0.37 and GitBook 2.6.7" />
+
+  <meta property="og:title" content="4 Randomized Controlled Trials | Couscous: A Causal Inference Cookbook in R" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="4 Randomized Controlled Trials | Couscous: A Causal Inference Cookbook in R" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Theo Obadiah Teguh" />
+
+
+<meta name="date" content="2024-01-18" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<link rel="prev" href="regression.html"/>
+<link rel="next" href="iv.html"/>
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+
+
+
+
+
+
+
+
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+
+<ul class="summary">
+<li class="chapter" data-level="" data-path="index.html"><a href="index.html"><i class="fa fa-check"></i>Preface</a></li>
+<li class="chapter" data-level="" data-path="usage-of-this-book.html"><a href="usage-of-this-book.html"><i class="fa fa-check"></i>Usage of this book</a></li>
+<li class="chapter" data-level="" data-path="software-information.html"><a href="software-information.html"><i class="fa fa-check"></i>Software Information</a></li>
+<li class="chapter" data-level="" data-path="acknowledgments.html"><a href="acknowledgments.html"><i class="fa fa-check"></i>Acknowledgments</a></li>
+<li class="chapter" data-level="" data-path="about-the-author.html"><a href="about-the-author.html"><i class="fa fa-check"></i>About the Author</a></li>
+<li class="chapter" data-level="1" data-path="rfoundations.html"><a href="rfoundations.html"><i class="fa fa-check"></i><b>1</b> R Foundations</a>
+<ul>
+<li class="chapter" data-level="1.1" data-path="rfoundations.html"><a href="rfoundations.html#basic-syntax"><i class="fa fa-check"></i><b>1.1</b> Basic Syntax</a></li>
+<li class="chapter" data-level="1.2" data-path="rfoundations.html"><a href="rfoundations.html#rfoundations"><i class="fa fa-check"></i><b>1.2</b> Visualization with R</a></li>
+<li class="chapter" data-level="1.3" data-path="rfoundations.html"><a href="rfoundations.html#rfoundations"><i class="fa fa-check"></i><b>1.3</b> Visualization with ggplot2</a></li>
+</ul></li>
+<li class="chapter" data-level="2" data-path="sfoundations.html"><a href="sfoundations.html"><i class="fa fa-check"></i><b>2</b> Statistical Foundations</a>
+<ul>
+<li class="chapter" data-level="2.1" data-path="sfoundations.html"><a href="sfoundations.html#sfoundations"><i class="fa fa-check"></i><b>2.1</b> P-Values</a></li>
+<li class="chapter" data-level="2.2" data-path="sfoundations.html"><a href="sfoundations.html#sfoundations"><i class="fa fa-check"></i><b>2.2</b> Hypothesis Testing</a></li>
+</ul></li>
+<li class="chapter" data-level="3" data-path="regression.html"><a href="regression.html"><i class="fa fa-check"></i><b>3</b> Statistics and Regression with R</a>
+<ul>
+<li class="chapter" data-level="3.1" data-path="regression.html"><a href="regression.html#linear-regression"><i class="fa fa-check"></i><b>3.1</b> Linear Regression</a></li>
+<li class="chapter" data-level="3.2" data-path="regression.html"><a href="regression.html#multiple-linear-regression"><i class="fa fa-check"></i><b>3.2</b> Multiple Linear Regression</a></li>
+<li class="chapter" data-level="3.3" data-path="regression.html"><a href="regression.html#adding-interaction-variables"><i class="fa fa-check"></i><b>3.3</b> Adding Interaction Variables</a></li>
+<li class="chapter" data-level="3.4" data-path="regression.html"><a href="regression.html#putting-it-all-together"><i class="fa fa-check"></i><b>3.4</b> Putting it All Together</a></li>
+</ul></li>
+<li class="chapter" data-level="4" data-path="rct.html"><a href="rct.html"><i class="fa fa-check"></i><b>4</b> Randomized Controlled Trials</a>
+<ul>
+<li class="chapter" data-level="4.1" data-path="rct.html"><a href="rct.html#methodology"><i class="fa fa-check"></i><b>4.1</b> Methodology</a></li>
+<li class="chapter" data-level="4.2" data-path="rct.html"><a href="rct.html#neyman-rubin-model"><i class="fa fa-check"></i><b>4.2</b> Neyman-Rubin Model</a></li>
+<li class="chapter" data-level="4.3" data-path="rct.html"><a href="rct.html#selection-bias"><i class="fa fa-check"></i><b>4.3</b> Selection Bias</a></li>
+<li class="chapter" data-level="4.4" data-path="rct.html"><a href="rct.html#question"><i class="fa fa-check"></i><b>4.4</b> Counterfactual Framework</a>
+<ul>
+<li class="chapter" data-level="4.4.1" data-path="rct.html"><a href="rct.html#defining-ate"><i class="fa fa-check"></i><b>4.4.1</b> Defining ATE</a></li>
+<li class="chapter" data-level="4.4.2" data-path="rct.html"><a href="rct.html#defining-att"><i class="fa fa-check"></i><b>4.4.2</b> Defining ATT</a></li>
+<li class="chapter" data-level="4.4.3" data-path="rct.html"><a href="rct.html#comparing-ate-and-att"><i class="fa fa-check"></i><b>4.4.3</b> Comparing ATE and ATT</a></li>
+<li class="chapter" data-level="4.4.4" data-path="rct.html"><a href="rct.html#problem"><i class="fa fa-check"></i><b>4.4.4</b> Counterfactual Model</a></li>
+</ul></li>
+<li class="chapter" data-level="4.5" data-path="rct.html"><a href="rct.html#framework-and-assumptions"><i class="fa fa-check"></i><b>4.5</b> Framework and Assumptions</a></li>
+<li class="chapter" data-level="4.6" data-path="rct.html"><a href="rct.html#caveats-and-difficulties"><i class="fa fa-check"></i><b>4.6</b> Caveats and Difficulties</a></li>
+<li class="chapter" data-level="4.7" data-path="rct.html"><a href="rct.html#case-studies"><i class="fa fa-check"></i><b>4.7</b> Case Studies</a>
+<ul>
+<li class="chapter" data-level="4.7.1" data-path="rct.html"><a href="rct.html#labor-market-experiment"><i class="fa fa-check"></i><b>4.7.1</b> Labor Market Experiment</a></li>
+<li class="chapter" data-level="4.7.2" data-path="rct.html"><a href="rct.html#corruption-in-indonesia"><i class="fa fa-check"></i><b>4.7.2</b> Corruption in Indonesia</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="5" data-path="iv.html"><a href="iv.html"><i class="fa fa-check"></i><b>5</b> Instrumental Variables</a>
+<ul>
+<li class="chapter" data-level="5.1" data-path="iv.html"><a href="iv.html#framework-and-assumptions-1"><i class="fa fa-check"></i><b>5.1</b> Framework and Assumptions</a>
+<ul>
+<li class="chapter" data-level="5.1.1" data-path="iv.html"><a href="iv.html#question-2"><i class="fa fa-check"></i><b>5.1.1</b> Question 2</a></li>
+<li class="chapter" data-level="5.1.2" data-path="iv.html"><a href="iv.html#question-3"><i class="fa fa-check"></i><b>5.1.2</b> Question 3</a></li>
+</ul></li>
+<li class="chapter" data-level="5.2" data-path="iv.html"><a href="iv.html#section-2-applied-problems"><i class="fa fa-check"></i><b>5.2</b> Section 2: Applied Problems</a>
+<ul>
+<li class="chapter" data-level="5.2.1" data-path="iv.html"><a href="iv.html#question-1-iv-regression-with-simulated-data"><i class="fa fa-check"></i><b>5.2.1</b> Question 1 (IV Regression with Simulated Data)</a></li>
+<li class="chapter" data-level="5.2.2" data-path="iv.html"><a href="iv.html#question-2-colonial-origins-of-comparative-development-ajr"><i class="fa fa-check"></i><b>5.2.2</b> Question 2 (Colonial Origins of Comparative Development, AJR)</a></li>
+</ul></li>
+</ul></li>
+<li class="chapter" data-level="6" data-path="rdd.html"><a href="rdd.html"><i class="fa fa-check"></i><b>6</b> Regression Discontinuity Design</a></li>
+<li class="chapter" data-level="7" data-path="did.html"><a href="did.html"><i class="fa fa-check"></i><b>7</b> Difference-in-Differences</a></li>
+</ul>
+
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Couscous: A Causal Inference Cookbook in R</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<div id="rct" class="section level1 hasAnchor" number="4">
+<h1><span class="header-section-number">4</span> Randomized Controlled Trials<a href="rct.html#rct" class="anchor-section" aria-label="Anchor link to header"></a></h1>
+<div id="methodology" class="section level2 hasAnchor" number="4.1">
+<h2><span class="header-section-number">4.1</span> Methodology<a href="rct.html#methodology" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>In this chapter, we will go over the basic intuition that is required for carrying out Randomized Control Trials (RCT) and the fundamental problem of causal inference. We will also discuss several potential solutions and caveats.</p>
+</div>
+<div id="neyman-rubin-model" class="section level2 hasAnchor" number="4.2">
+<h2><span class="header-section-number">4.2</span> Neyman-Rubin Model<a href="rct.html#neyman-rubin-model" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>How do we determine the causal effect of some treatment? Intuitively, we can just compare the outcome between two groups: treatment (treated) and control (untreated). Neyman-Rubin defined the causal effect <span class="math inline">\(\delta\)</span> as follows:</p>
+<p><span class="math display" id="eq:delta">\[\begin{equation}
+  \delta=Y^{Treatment}-Y^{Control}
+  \tag{4.1}
+\end{equation}\]</span></p>
+<p>However, now we encounter a major issue. How do we know if this comparison is fair? How do we know that we are comparing apples with apples and not apples with oranges?</p>
+</div>
+<div id="selection-bias" class="section level2 hasAnchor" number="4.3">
+<h2><span class="header-section-number">4.3</span> Selection Bias<a href="rct.html#selection-bias" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>Imagine that you are comparing the effect of health insurance on peoples health. You gather a pool of people and separate them in two groups. People with health insurance are classified as the treatment, and people with no health insurance are placed into the control group.</p>
+<p>Suppose that you create a sophisticated regression model and you find that people with health insurance tend to have better health compared to the people without health insurance. Does this mean that health insurance <em>causes</em> healthier lifestyle?</p>
+<p>We can actually argue that people who have access to health insurance may have higher levels of income. Thus, this group of people may have access to better food, better living conditions, access to a gym, and so on which may all lead to better health. Therefore, this comparison is not fair, we cannot simply subtract the difference in outcomes, because we are comparing ‘apples with oranges’.</p>
+<p>This phenomenon is something that we refer to as <strong>selection bias</strong>. We define it as the bias driven by the systematic differences between the treatment (e.g insured) and control (e.g uninsured) groups.</p>
+<p>The solution to this is <em>ceteris paribus</em> or ‘all other things equal’, the favorite Latin assumption for economists. However, in the field social studies, this is fundamentally difficult to attain as all individuals are inherently different.</p>
+<p>Potential remedies to this selection effect include:</p>
+<ul>
+<li><strong>Adding:</strong> Add more control variables to mitigate the omitted variable bias, a very popular and cheap, but it is not really a solution.</li>
+<li><strong>Matching:</strong> Choose a comparison group that is close to the group of interest, but we will still encounter problems with unobserved variables.</li>
+<li><strong>Modeling:</strong> Explicitly model the selection process (e.g Heckman selection), with the risk of modeling human behavior wrongly.</li>
+<li><strong>Experiments:</strong> Randomized Controlled Trials (RCT).</li>
+</ul>
+</div>
+<div id="question" class="section level2 hasAnchor" number="4.4">
+<h2><span class="header-section-number">4.4</span> Counterfactual Framework<a href="rct.html#question" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>So how do we deal with apples and oranges? The best comparison (control) group for an interest (treatment) group is a group that <strong>only differs in treatment</strong> but not any other features. So instead we ask the question:</p>
+<blockquote>
+<p>What would be the potential outcome if the treatment did not happen?</p>
+</blockquote>
+<p>We will start exploring this question by understanding some crucial concepts. Note that we want to focus more on <strong>average</strong> treatment effect instead of <strong>individual</strong> treatment effect because we are studying general human behavior and statistically, we need to calculate the average of a sufficient large group of people to remove the effect driven by chance or noise.</p>
+<div id="defining-ate" class="section level3 hasAnchor" number="4.4.1">
+<h3><span class="header-section-number">4.4.1</span> Defining ATE<a href="rct.html#defining-ate" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Average Treatment Effect (ATE) is defined as follows:</p>
+<span class="math display" id="eq:base-ate">\[\begin{equation}
+\begin{split}
+\mathrm{ATE} &amp; =\text{mean}(Y^{\text{Treated}})-\text{mean}(Y^{\text{Control}})\\
+&amp; =\text{mean}(Y^{\text{Treated}}-Y^{\text{Control}})
+\end{split} \tag{4.2}
+\end{equation}\]</span>
+<p><strong>Visualizing ATE with R</strong></p>
+<p>Let’s try to illustrate and visualize ATE with R. First, we generate hypothetical control and treatment groups as follows:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="rct.html#cb37-1" tabindex="-1"></a><span class="co"># We randomly generate 100 data points for both groups</span></span>
+<span id="cb37-2"><a href="rct.html#cb37-2" tabindex="-1"></a><span class="co"># The control follows a normal distribution with mean = 5 and std = 2</span></span>
+<span id="cb37-3"><a href="rct.html#cb37-3" tabindex="-1"></a>y_control <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">5</span>, <span class="at">sd =</span> <span class="dv">2</span>)</span>
+<span id="cb37-4"><a href="rct.html#cb37-4" tabindex="-1"></a></span>
+<span id="cb37-5"><a href="rct.html#cb37-5" tabindex="-1"></a><span class="co"># The treatment follows a normal distribution with mean = 10 and std = 3</span></span>
+<span id="cb37-6"><a href="rct.html#cb37-6" tabindex="-1"></a>y_treatment <span class="ot">&lt;-</span> <span class="fu">rnorm</span>(<span class="dv">100</span>, <span class="at">mean =</span> <span class="dv">10</span>, <span class="at">sd =</span> <span class="dv">3</span>)</span></code></pre></div>
+<p>We find ATE by calculating the difference in their means:</p>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="rct.html#cb38-1" tabindex="-1"></a><span class="fu">mean</span>(y_treatment) <span class="sc">-</span> <span class="fu">mean</span>(y_control)</span></code></pre></div>
+<pre><code>## [1] 5.32968</code></pre>
+<p>We can visualize the ATE by plotting the density curves for the control and treatment groups and mark out the means with dashed lines.</p>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="rct.html#cb40-1" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span></code></pre></div>
+<pre><code>## 
+## Attaching package: &#39;ggplot2&#39;</code></pre>
+<pre><code>## The following object is masked from &#39;auto&#39;:
+## 
+##     mpg</code></pre>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="rct.html#cb43-1" tabindex="-1"></a><span class="fu">library</span>(ggthemes)</span>
+<span id="cb43-2"><a href="rct.html#cb43-2" tabindex="-1"></a><span class="fu">library</span>(plyr)</span>
+<span id="cb43-3"><a href="rct.html#cb43-3" tabindex="-1"></a></span>
+<span id="cb43-4"><a href="rct.html#cb43-4" tabindex="-1"></a><span class="co"># We combine the data into one larger data frame and create categories</span></span>
+<span id="cb43-5"><a href="rct.html#cb43-5" tabindex="-1"></a>ate_df <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Control =</span> y_control, <span class="at">Treatment =</span> y_treatment)</span>
+<span id="cb43-6"><a href="rct.html#cb43-6" tabindex="-1"></a></span>
+<span id="cb43-7"><a href="rct.html#cb43-7" tabindex="-1"></a><span class="co"># Now, we stack the two columns into one</span></span>
+<span id="cb43-8"><a href="rct.html#cb43-8" tabindex="-1"></a>ate_df <span class="ot">&lt;-</span> <span class="fu">stack</span>(<span class="fu">lapply</span>(ate_df[<span class="dv">1</span><span class="sc">:</span><span class="dv">2</span>], as.numeric))</span>
+<span id="cb43-9"><a href="rct.html#cb43-9" tabindex="-1"></a><span class="fu">names</span>(ate_df) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Values&quot;</span>, <span class="st">&quot;Group&quot;</span>)</span></code></pre></div>
+<p>After the data transformation above, our data will look something like this.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-24">Table 4.1: </span>A glimpse of <code>ate_df</code></caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Values</th>
+<th align="center">Group</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">98</td>
+<td align="center">2.2273200</td>
+<td align="center">Control</td>
+</tr>
+<tr class="even">
+<td align="left">99</td>
+<td align="center">7.7983737</td>
+<td align="center">Control</td>
+</tr>
+<tr class="odd">
+<td align="left">100</td>
+<td align="center">0.6032325</td>
+<td align="center">Control</td>
+</tr>
+<tr class="even">
+<td align="left">101</td>
+<td align="center">12.3189941</td>
+<td align="center">Treatment</td>
+</tr>
+<tr class="odd">
+<td align="left">102</td>
+<td align="center">8.2996330</td>
+<td align="center">Treatment</td>
+</tr>
+<tr class="even">
+<td align="left">103</td>
+<td align="center">9.9676638</td>
+<td align="center">Treatment</td>
+</tr>
+</tbody>
+</table>
+<p>We can continue plotting the data. In this plot, ATE is just the distance between the two dashed lines.</p>
+<div class="sourceCode" id="cb44"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb44-1"><a href="rct.html#cb44-1" tabindex="-1"></a><span class="co"># Now we create a summary table for the means</span></span>
+<span id="cb44-2"><a href="rct.html#cb44-2" tabindex="-1"></a>mu <span class="ot">&lt;-</span> <span class="fu">ddply</span>(ate_df, <span class="st">&quot;Group&quot;</span>, summarise, <span class="at">grp.mean =</span> <span class="fu">mean</span>(Values))</span>
+<span id="cb44-3"><a href="rct.html#cb44-3" tabindex="-1"></a></span>
+<span id="cb44-4"><a href="rct.html#cb44-4" tabindex="-1"></a>ate_df <span class="sc">|&gt;</span> <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Values, <span class="at">color =</span> Group)) <span class="sc">+</span></span>
+<span id="cb44-5"><a href="rct.html#cb44-5" tabindex="-1"></a>  </span>
+<span id="cb44-6"><a href="rct.html#cb44-6" tabindex="-1"></a>  <span class="co"># Plot the density curves</span></span>
+<span id="cb44-7"><a href="rct.html#cb44-7" tabindex="-1"></a>  <span class="fu">geom_density</span>(<span class="at">linewidth =</span> <span class="fl">0.8</span>, <span class="at">alpha =</span> <span class="fl">0.8</span>, <span class="at">bw =</span> <span class="fl">0.6679</span>) <span class="sc">+</span></span>
+<span id="cb44-8"><a href="rct.html#cb44-8" tabindex="-1"></a>  </span>
+<span id="cb44-9"><a href="rct.html#cb44-9" tabindex="-1"></a>  <span class="co"># Add the dashed lines marking the averages</span></span>
+<span id="cb44-10"><a href="rct.html#cb44-10" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">data =</span> mu, <span class="fu">aes</span>(<span class="at">xintercept =</span> grp.mean, <span class="at">color =</span> Group),</span>
+<span id="cb44-11"><a href="rct.html#cb44-11" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">&quot;dashed&quot;</span>) <span class="sc">+</span></span>
+<span id="cb44-12"><a href="rct.html#cb44-12" tabindex="-1"></a>  </span>
+<span id="cb44-13"><a href="rct.html#cb44-13" tabindex="-1"></a>  <span class="co"># Add some additional details</span></span>
+<span id="cb44-14"><a href="rct.html#cb44-14" tabindex="-1"></a>  <span class="fu">theme_clean</span>() <span class="sc">+</span></span>
+<span id="cb44-15"><a href="rct.html#cb44-15" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Density&quot;</span>) <span class="sc">+</span></span>
+<span id="cb44-16"><a href="rct.html#cb44-16" tabindex="-1"></a>  <span class="fu">labs</span>(<span class="at">caption =</span> <span class="st">&quot;N = 100  Bandwith = 0.6679&quot;</span>) <span class="sc">+</span></span>
+<span id="cb44-17"><a href="rct.html#cb44-17" tabindex="-1"></a>  <span class="fu">scale_color_manual</span>(<span class="at">values=</span><span class="fu">c</span>(<span class="st">&quot;black&quot;</span>, <span class="st">&quot;red&quot;</span>))</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-25-1.png" width="672" style="display: block; margin: auto;" /></p>
+</div>
+<div id="defining-att" class="section level3 hasAnchor" number="4.4.2">
+<h3><span class="header-section-number">4.4.2</span> Defining ATT<a href="rct.html#defining-att" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>The Average Treatment Effect on the Treated (ATT) is defined as follows:</p>
+<span class="math display" id="eq:base-att">\[\begin{equation}
+\begin{split}
+\mathrm{ATT} &amp; =\text{mean}(Y^{\text{Treated|Treated}})-\text{mean}(Y^{\text{Control|Treated}})\\
+&amp; =\text{mean}(Y^{\text{Treated}}-Y^{\text{Control}}|\text{Treated})
+\end{split} \tag{4.3}
+\end{equation}\]</span>
+</div>
+<div id="comparing-ate-and-att" class="section level3 hasAnchor" number="4.4.3">
+<h3><span class="header-section-number">4.4.3</span> Comparing ATE and ATT<a href="rct.html#comparing-ate-and-att" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>ATE describes the treatment effect for the entire population, including individuals who would never end up getting the treatment in the real world. For the interest of testing theory or understanding general behavior, we care more about ATE.</p>
+<p>On the other hand, ATT describes the treatment effect on only the individuals who end up getting the treatment. For the interest of policy implementation, we care more about ATT.</p>
+<p>In well designed studies, ATE can be the same as ATT.</p>
+</div>
+<div id="problem" class="section level3 hasAnchor" number="4.4.4">
+<h3><span class="header-section-number">4.4.4</span> Counterfactual Model<a href="rct.html#problem" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>Now we can formally define the counterfactual model. We will then also illustrate the usage of the model with a hypothetical data set in R.</p>
+<p><strong>Defining Treatment Assignment</strong>
+<span class="math display">\[D_i=D_1\text{ if unit i received the treatment}\]</span>
+<span class="math display">\[D_i=D_0\text{ if unit i did not receive treatment}\]</span>
+<strong>Defining Outcomes</strong>
+<span class="math display">\[Y_i:\text{Observed outcome variable of interest for unit i}\]</span>
+<span class="math display">\[\text{Note that the treatment occurs temporally before the outcomes}\]</span>
+<strong>Fundamental Problem of Causal Inference</strong></p>
+<p>Recall that we are trying to answer this <a href="rct.html#question">question</a>. However, this leads us to a crucial obstacle.</p>
+<blockquote>
+<p>We can never observe the treated outcome and the control outcome for the same individual.</p>
+</blockquote>
+<p><strong>Revisiting Delta and Average Treatment Effect</strong></p>
+<p>In light of the aforementioned fundamental issue, we redefine the casual effect of the treatment <a href="rct.html#eq:delta">(4.1)</a> as the difference of its two <strong>potential</strong> outcomes.</p>
+<p><span class="math display">\[\delta \text{ is }\alpha_i=Y_{1i}-Y_{0i}\]</span>
+<span class="math display">\[Y_{di}=Y_{1i}=\text{Potential outcome for unit i with treatment}\]</span>
+<span class="math display">\[Y_{di}=Y_{0i}=\text{Potential outcome for unit i without treatment}\]</span></p>
+<p>Based on the above, we will also redefine Average Treatment Effect <a href="rct.html#eq:base-ate">(4.2)</a> as follows:</p>
+<p><span class="math display">\[\alpha_{\text{ATE}}=\frac{\Sigma Y_{1i}}{N}-\frac{\Sigma Y_{0i}}{N}=E[Y_{1i}-Y_{0i}]\]</span></p>
+<p>Correspondingly, we redefine the Average Treatment Effect on the Treated <a href="rct.html#eq:base-att">(4.3)</a> and also introduce the Average Treatment Effect on the Control (ATC) as follows:</p>
+<p><span class="math display">\[\alpha_{\text{ATT}}=E[Y_{1i}-Y_{0i}|D_1]\]</span>
+<span class="math display">\[\alpha_{\text{ATC}}=E[Y_{1i}-Y_{0i}|D_0]\]</span>
+<strong>Illustrating Counterfactuals with R</strong></p>
+<p>We will now use the <code>unions.csv</code> data set to illustrate the concept of counterfactuals and the Fundamental Problem of Causal Inference. Let’s view the structure of the available data. The variables in the data set are:</p>
+<ul>
+<li><code>surname</code>: Individual’s Last Name</li>
+<li><code>union_member</code>: Union Member Logical Variable (1=“Yes”; 0=“No”)</li>
+<li><code>ideology_y1</code>: Ideology If a Union Member (Ranges from -10=“far-left” to 10=“far-right”)</li>
+<li><code>ideology_y0</code>: Ideology If Not a Union Member (Ranges from -10=“far-left” to 10=“far-right”)</li>
+<li><code>ITE</code>: Individual Treatment Effect (incomplete)</li>
+</ul>
+<table>
+<caption><span id="tab:unnamed-chunk-26">Table 4.2: </span>The Incomplete Content of<code>unions.csv</code></caption>
+<thead>
+<tr class="header">
+<th align="center">surname</th>
+<th align="center">union_member</th>
+<th align="center">ideology_y1</th>
+<th align="center">ideology_y0</th>
+<th align="center">ITE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Abernathy</td>
+<td align="center">0</td>
+<td align="center">4</td>
+<td align="center">7</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="center">Baca</td>
+<td align="center">1</td>
+<td align="center">-2</td>
+<td align="center">-2</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="center">Chang</td>
+<td align="center">0</td>
+<td align="center">3</td>
+<td align="center">2</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="center">Dunn</td>
+<td align="center">1</td>
+<td align="center">-4</td>
+<td align="center">1</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="center">Emami</td>
+<td align="center">1</td>
+<td align="center">-2</td>
+<td align="center">1</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="center">Fan</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">NA</td>
+</tr>
+</tbody>
+</table>
+<p>We can see that the rightmost column is still empty. The column is designated for the Individual Treatment Effect (ITE). In other words, it is actually <span class="math inline">\(\delta\)</span> or <span class="math inline">\(\alpha_{i}\)</span>. Let’s calculate the treatment effect as follows, and assign the result to the column:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="rct.html#cb45-1" tabindex="-1"></a>unions<span class="sc">$</span>ITE <span class="ot">&lt;-</span> unions<span class="sc">$</span>ideology_y1 <span class="sc">-</span> unions<span class="sc">$</span>ideology_y0</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-28">Table 4.3: </span>The Complete Content of<code>unions.csv</code></caption>
+<thead>
+<tr class="header">
+<th align="center">surname</th>
+<th align="center">union_member</th>
+<th align="center">ideology_y1</th>
+<th align="center">ideology_y0</th>
+<th align="center">ITE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Abernathy</td>
+<td align="center">0</td>
+<td align="center">4</td>
+<td align="center">7</td>
+<td align="center">-3</td>
+</tr>
+<tr class="even">
+<td align="center">Baca</td>
+<td align="center">1</td>
+<td align="center">-2</td>
+<td align="center">-2</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Chang</td>
+<td align="center">0</td>
+<td align="center">3</td>
+<td align="center">2</td>
+<td align="center">1</td>
+</tr>
+<tr class="even">
+<td align="center">Dunn</td>
+<td align="center">1</td>
+<td align="center">-4</td>
+<td align="center">1</td>
+<td align="center">-5</td>
+</tr>
+<tr class="odd">
+<td align="center">Emami</td>
+<td align="center">1</td>
+<td align="center">-2</td>
+<td align="center">1</td>
+<td align="center">-3</td>
+</tr>
+<tr class="even">
+<td align="center">Fan</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<p>Thus, we have updated our data set and we can now simply calculate the ATE as the mean of ITE:</p>
+<div class="sourceCode" id="cb46"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb46-1"><a href="rct.html#cb46-1" tabindex="-1"></a><span class="fu">mean</span>(unions<span class="sc">$</span>ITE)</span></code></pre></div>
+<pre><code>## [1] -1</code></pre>
+<p>Additionally, we can check the ‘most affected’ individual by creating a vector containing the absolute values of the ITE, and then we look for the index containing the maximum value:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="rct.html#cb48-1" tabindex="-1"></a><span class="co"># Create the vector</span></span>
+<span id="cb48-2"><a href="rct.html#cb48-2" tabindex="-1"></a>ITE_abs <span class="ot">&lt;-</span> <span class="fu">abs</span>(unions<span class="sc">$</span>ITE)</span>
+<span id="cb48-3"><a href="rct.html#cb48-3" tabindex="-1"></a></span>
+<span id="cb48-4"><a href="rct.html#cb48-4" tabindex="-1"></a><span class="co"># Find the corresponding surname of the maximum absolute ITE</span></span>
+<span id="cb48-5"><a href="rct.html#cb48-5" tabindex="-1"></a>unions<span class="sc">$</span>surname[<span class="fu">which.max</span>(ITE_abs)]</span></code></pre></div>
+<pre><code>## [1] &quot;Dunn &quot;</code></pre>
+<p>To calculate ATT, we can filter out the control group and then use the <code>mean()</code> function as follows:</p>
+<div class="sourceCode" id="cb50"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb50-1"><a href="rct.html#cb50-1" tabindex="-1"></a><span class="fu">mean</span>(unions<span class="sc">$</span>ITE[unions<span class="sc">$</span>union_member <span class="sc">==</span> <span class="dv">1</span>])</span></code></pre></div>
+<pre><code>## [1] -2</code></pre>
+<p>Do you see the main issue? In real life, the table is incomplete! We are not able to directly calculate ITE, as an individual cannot be a union member and not a union member at the same time. In other words, in practice, our data would look something like this:</p>
+<table>
+<caption><span id="tab:unnamed-chunk-32">Table 4.4: </span>The Problem of Unobservables</caption>
+<thead>
+<tr class="header">
+<th align="center">surname</th>
+<th align="center">union_member</th>
+<th align="center">ideology_y1</th>
+<th align="center">ideology_y0</th>
+<th align="center">ITE</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Abernathy</td>
+<td align="center">0</td>
+<td align="center">NA</td>
+<td align="center">7</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="center">Baca</td>
+<td align="center">1</td>
+<td align="center">-2</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="center">Chang</td>
+<td align="center">0</td>
+<td align="center">NA</td>
+<td align="center">2</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="center">Dunn</td>
+<td align="center">1</td>
+<td align="center">-4</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="odd">
+<td align="center">Emami</td>
+<td align="center">1</td>
+<td align="center">-2</td>
+<td align="center">NA</td>
+<td align="center">NA</td>
+</tr>
+<tr class="even">
+<td align="center">Fan</td>
+<td align="center">0</td>
+<td align="center">NA</td>
+<td align="center">0</td>
+<td align="center">NA</td>
+</tr>
+</tbody>
+</table>
+<p>Therefore, observed outcomes are realized as</p>
+<p><span class="math display" id="eq:potential-outcome">\[\begin{equation}
+Y_i=D_i \times Y_{1i}+(1-D_i)\times Y_{0i}
+\tag{4.4}
+\end{equation}\]</span></p>
+<p>Additionally, our ‘best guess’ is the Difference-in-Means (DM) estimator, which is based on the outcomes that we actually see in the above table, defined as
+<span class="math display">\[E[Y_i|D_i=1]-E[Y_i|D_i=0]\]</span>
+We calculate this estimator in R with the following:</p>
+<div class="sourceCode" id="cb52"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb52-1"><a href="rct.html#cb52-1" tabindex="-1"></a>is_union <span class="ot">&lt;-</span> (unions<span class="sc">$</span>union_member <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb52-2"><a href="rct.html#cb52-2" tabindex="-1"></a>not_union <span class="ot">&lt;-</span> (unions<span class="sc">$</span>union_member <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb52-3"><a href="rct.html#cb52-3" tabindex="-1"></a></span>
+<span id="cb52-4"><a href="rct.html#cb52-4" tabindex="-1"></a><span class="fu">mean</span>(unions<span class="sc">$</span>ideology_y1[is_union]) <span class="sc">-</span> <span class="fu">mean</span>(unions<span class="sc">$</span>ideology_y0[not_union])</span></code></pre></div>
+<pre><code>## [1] -1.636364</code></pre>
+<p>As you can see, it is not equal to the ATE we calculated previously. How do we show this mathematically? Well we can use a simple mathematical trick. We start off with the Difference-in-Means estimator as follows:
+<span class="math display">\[E[Y_i|D_i=1]-E[Y_i|D_i=0]\]</span>
+Under the observed outcome framework <a href="rct.html#eq:potential-outcome">(4.4)</a> the above equation is equivalent to:
+<span class="math display">\[E[Y_{1i}|D_i=1]-E[Y_{0i}|D_i=0]\]</span></p>
+<p>We then add and subtract <span class="math inline">\(E[Y_{0i}|D_i=1]\)</span> to the above term.
+<span class="math display">\[E[Y_{1i}|D_i=1]-E[Y_{0i}|D_i=1]+E[Y_{0i}|D_i=1]-E[Y_{0i}|D_i=0]\]</span></p>
+<p>This effectively does not change the equation. The term is an <strong>unobservable</strong>, as it is the potential outcome if unit <span class="math inline">\(i\)</span> did not receive treatment, given that unit <span class="math inline">\(i\)</span> is in the treatment group. Combining the first two terms, we have:
+<span class="math display">\[E[Y_{1i}-Y_{0i}|D_i=1]+E[Y_{0i}|D_i=1]-E[Y_{0i}|D_i=0]\]</span>
+What do these terms mean exactly?</p>
+<p><span class="math display">\[E[Y_{1i}-Y_{0i}|D_i=1] \text{ is the ATT}\]</span>
+<span class="math display">\[E[Y_{0i}|D_i=1]-E[Y_{0i}|D_i=0] \text{ is the (selection) bias}\]</span>
+Therefore, in causal inference, our aim is to <strong>analyze ATT, whilst minimizing the bias term</strong>.</p>
+</div>
+</div>
+<div id="framework-and-assumptions" class="section level2 hasAnchor" number="4.5">
+<h2><span class="header-section-number">4.5</span> Framework and Assumptions<a href="rct.html#framework-and-assumptions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Framework</strong></p>
+<p>In RCT, we rely on an appropriate assignment mechanism to fill in the missing potential outcomes and get rid of the bias. In other words, the randomization stage deals with the ‘apples and oranges’ problem between the treatment and control.</p>
+<br />
+<center>
+<img src="figures/04_rct.png" id="id" class="class" style="width:60.0%;height:60.0%" />
+</center>
+<p><br /></p>
+<p><strong>Assumptions</strong>
+Now we introduce the two necessary assumptions for Randomized Controlled Trials.
+<strong>Excludability</strong></p>
+<p>The treatment is the sole causal agent and there are no confounding factors (factors that are associated with the treatment but not the intention of the treatment).</p>
+<ul>
+<li>Example of violation: Hawthorne effect (people behave differently when they are aware of being in an experiment).</li>
+</ul>
+<p><strong>Non-interference/no spillovers</strong></p>
+<p>The individual potential outcomes of each unit do not depend on the treatment status of any units other than themselves.</p>
+<ul>
+<li>Example of violation: The treated individuals transfer resources to the control individuals.</li>
+</ul>
+</div>
+<div id="caveats-and-difficulties" class="section level2 hasAnchor" number="4.6">
+<h2><span class="header-section-number">4.6</span> Caveats and Difficulties<a href="rct.html#caveats-and-difficulties" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p><strong>Random Assignment is Not Random Sampling</strong></p>
+<p>These two processes are completely separate, and happen in different parts of the experiment.</p>
+<br />
+<center>
+<img src="figures/04_caveat1.png" id="id" class="class" style="width:60.0%;height:60.0%" />
+</center>
+<p><br /></p>
+<p><strong>Internal and External Validity</strong></p>
+<p>We should always ask ourselves if the effect of interest can be translated to the general population</p>
+<br />
+<center>
+<img src="figures/04_caveat2.png" id="id" class="class" style="width:60.0%;height:60.0%" />
+</center>
+<p><br /></p>
+<p><strong>Difficulties in Design</strong></p>
+<ul>
+<li>We need a simple design that works</li>
+<li>We need to know the subjects well to design an effective experiment</li>
+<li>Experimental design is more of an art than a science</li>
+</ul>
+<p><strong>Difficulties in Implementation</strong></p>
+<ul>
+<li><em>Non-compliance:</em> Individuals do not do what you ask them to do</li>
+<li><em>Attrition:</em> People quit during the experiment</li>
+<li><em>Spill-overs:</em> Individuals in the control group interact with treated individuals or are indirectly affected by them through the changed social and economic conditions caused by the treatment</li>
+<li><em>Ethics:</em> Ethical issues can be a serious concern</li>
+</ul>
+</div>
+<div id="case-studies" class="section level2 hasAnchor" number="4.7">
+<h2><span class="header-section-number">4.7</span> Case Studies<a href="rct.html#case-studies" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="labor-market-experiment" class="section level3 hasAnchor" number="4.7.1">
+<h3><span class="header-section-number">4.7.1</span> Labor Market Experiment<a href="rct.html#labor-market-experiment" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>This example is based on a well-known paper on racial bias in the labor market: “Are Emily and Greg More Employable Than Lakisha and Jamal? A Field Experiment on Labor Market Discrimination” by Marianne Bertrand and Sendhil Mullainathan (thus BM for short). The paper used a Randomized Controlled Trial experiment.</p>
+<p>The paper wanted to see if there was racial discrimination, particularly when comparing White and Black job seekers, in the Chicago and Boston labor market. The researchers created fake CVs with White and Black sounding names, and then diversified the CV quality and postal codes.</p>
+<p>They found that people who had Black sounding names had a lower callback rate. Moreover, it seemed that the quality of the resumes did not matter, as the better quality White resumes had 30% more callbacks than the worse quality ones, but the effect was not as great for African-American resumes. Additionally, better neighborhoods based on the assigned postal codes increased callback rates for White resumes but not for Black ones.</p>
+<p>The paper concludes that African-Americans face differential treatment when searching for jobs, and they find it hard to overcome this hurdle by improving their observable skills and credentials. In fact if African-Americans knew the economic returns for their skills, they rationally would be less willing to participate in skills enhancement programs.</p>
+<p>Depending on the available data, we can use different causal inference strategies or methodologies to our advantage. Here, let’s try and mimic the data exploration process that eventually lead to them using an RCT approach.</p>
+<p>Let’s view the structure of our data. We have the following variables:</p>
+<ul>
+<li><code>firstname</code>: Individual’s First Name</li>
+<li><code>sex</code>: Individual’s Biological Sex</li>
+<li><code>race</code>: Individual’s Race</li>
+<li><code>call</code>: Callback Logical Variable (1=“Yes; 0=”No”)</li>
+</ul>
+<div class="sourceCode" id="cb54"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb54-1"><a href="rct.html#cb54-1" tabindex="-1"></a><span class="co"># Generate the frequency table</span></span>
+<span id="cb54-2"><a href="rct.html#cb54-2" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(resume),  <span class="at">align =</span> <span class="st">&quot;c&quot;</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>, <span class="at">caption =</span> <span class="st">&quot;The Structure of `resume.csv`&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-35">Table 4.5: </span>The Structure of <code>resume.csv</code></caption>
+<thead>
+<tr class="header">
+<th align="center">firstname</th>
+<th align="center">sex</th>
+<th align="center">race</th>
+<th align="center">call</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Allison</td>
+<td align="center">female</td>
+<td align="center">white</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Kristen</td>
+<td align="center">female</td>
+<td align="center">white</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Lakisha</td>
+<td align="center">female</td>
+<td align="center">black</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Latonya</td>
+<td align="center">female</td>
+<td align="center">black</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Carrie</td>
+<td align="center">female</td>
+<td align="center">white</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Jay</td>
+<td align="center">male</td>
+<td align="center">white</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+<p>First, we can tabulate the relationship between race and callback by creating a frequency table:</p>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="rct.html#cb55-1" tabindex="-1"></a><span class="co"># This stage just to format things better, so that the table is more readable</span></span>
+<span id="cb55-2"><a href="rct.html#cb55-2" tabindex="-1"></a>resume_copy <span class="ot">&lt;-</span> resume</span>
+<span id="cb55-3"><a href="rct.html#cb55-3" tabindex="-1"></a></span>
+<span id="cb55-4"><a href="rct.html#cb55-4" tabindex="-1"></a>resume_copy<span class="sc">$</span>race[resume_copy<span class="sc">$</span>race <span class="sc">==</span> <span class="st">&quot;white&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;White&quot;</span></span>
+<span id="cb55-5"><a href="rct.html#cb55-5" tabindex="-1"></a>resume_copy<span class="sc">$</span>race[resume_copy<span class="sc">$</span>race <span class="sc">==</span> <span class="st">&quot;black&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Black&quot;</span></span>
+<span id="cb55-6"><a href="rct.html#cb55-6" tabindex="-1"></a>resume_copy<span class="sc">$</span>call[resume_copy<span class="sc">$</span>call <span class="sc">==</span> <span class="st">&quot;1&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Received Callback&quot;</span></span>
+<span id="cb55-7"><a href="rct.html#cb55-7" tabindex="-1"></a>resume_copy<span class="sc">$</span>call[resume_copy<span class="sc">$</span>call <span class="sc">==</span> <span class="st">&quot;0&quot;</span>] <span class="ot">&lt;-</span> <span class="st">&quot;Received No Callback&quot;</span></span>
+<span id="cb55-8"><a href="rct.html#cb55-8" tabindex="-1"></a></span>
+<span id="cb55-9"><a href="rct.html#cb55-9" tabindex="-1"></a><span class="co"># Then we show the table</span></span>
+<span id="cb55-10"><a href="rct.html#cb55-10" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">table</span>(resume_copy<span class="sc">$</span>race, resume_copy<span class="sc">$</span>call),  <span class="at">align =</span> <span class="st">&quot;c&quot;</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Received Callback</th>
+<th align="center">Received No Callback</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">Black</td>
+<td align="center">157</td>
+<td align="center">2278</td>
+</tr>
+<tr class="even">
+<td align="left">White</td>
+<td align="center">235</td>
+<td align="center">2200</td>
+</tr>
+</tbody>
+</table>
+<p>Another way show a better picture of the relationship is to calculate the callback rates of the races:</p>
+<div class="sourceCode" id="cb56"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb56-1"><a href="rct.html#cb56-1" tabindex="-1"></a><span class="co"># Callback rate for &#39;White&#39;</span></span>
+<span id="cb56-2"><a href="rct.html#cb56-2" tabindex="-1"></a>call_rate_w <span class="ot">&lt;-</span> <span class="fu">mean</span>(resume<span class="sc">$</span>call[resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">&quot;white&quot;</span>])</span>
+<span id="cb56-3"><a href="rct.html#cb56-3" tabindex="-1"></a></span>
+<span id="cb56-4"><a href="rct.html#cb56-4" tabindex="-1"></a><span class="co"># Callback rate for &#39;Black&#39;</span></span>
+<span id="cb56-5"><a href="rct.html#cb56-5" tabindex="-1"></a>call_rate_b <span class="ot">&lt;-</span> <span class="fu">mean</span>(resume<span class="sc">$</span>call[resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">&quot;black&quot;</span>])</span></code></pre></div>
+<p>Then, we can visualize the data and compare the two callback rates as with bar plots.</p>
+<div class="sourceCode" id="cb57"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb57-1"><a href="rct.html#cb57-1" tabindex="-1"></a><span class="co"># library(ggplot2)</span></span>
+<span id="cb57-2"><a href="rct.html#cb57-2" tabindex="-1"></a><span class="co"># library(ggthemes)</span></span>
+<span id="cb57-3"><a href="rct.html#cb57-3" tabindex="-1"></a></span>
+<span id="cb57-4"><a href="rct.html#cb57-4" tabindex="-1"></a>summary_bw <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Callback_Rate =</span> <span class="fu">c</span>(call_rate_b, call_rate_w),</span>
+<span id="cb57-5"><a href="rct.html#cb57-5" tabindex="-1"></a>                         <span class="at">Race =</span> <span class="fu">c</span>(<span class="st">&quot;Black&quot;</span>, <span class="st">&quot;White&quot;</span>))</span>
+<span id="cb57-6"><a href="rct.html#cb57-6" tabindex="-1"></a></span>
+<span id="cb57-7"><a href="rct.html#cb57-7" tabindex="-1"></a><span class="co"># Here we create the bar plot</span></span>
+<span id="cb57-8"><a href="rct.html#cb57-8" tabindex="-1"></a><span class="fu">ggplot</span>(summary_bw, <span class="fu">aes</span>(<span class="at">x =</span> Race, <span class="at">y =</span> Callback_Rate, <span class="at">fill =</span> Race)) <span class="sc">+</span></span>
+<span id="cb57-9"><a href="rct.html#cb57-9" tabindex="-1"></a>  <span class="fu">geom_bar</span>(<span class="at">stat =</span> <span class="st">&#39;identity&#39;</span>, <span class="at">show.legend =</span> <span class="cn">FALSE</span>) <span class="sc">+</span></span>
+<span id="cb57-10"><a href="rct.html#cb57-10" tabindex="-1"></a>  <span class="fu">xlab</span>(<span class="st">&quot;Race&quot;</span>) <span class="sc">+</span></span>
+<span id="cb57-11"><a href="rct.html#cb57-11" tabindex="-1"></a>  <span class="fu">ylab</span>(<span class="st">&quot;Callback Rate&quot;</span>) <span class="sc">+</span></span>
+<span id="cb57-12"><a href="rct.html#cb57-12" tabindex="-1"></a>  <span class="fu">scale_fill_manual</span>(<span class="at">values =</span> <span class="fu">c</span>(<span class="st">&quot;cyan&quot;</span>, <span class="st">&quot;lightblue&quot;</span>)) <span class="sc">+</span></span>
+<span id="cb57-13"><a href="rct.html#cb57-13" tabindex="-1"></a>  <span class="fu">theme_clean</span>()</span></code></pre></div>
+<p><img src="_main_files/figure-html/unnamed-chunk-38-1.png" width="672" style="display: block; margin: auto;" /></p>
+<p>We can also create new conditional columns, or dummy variables based on the race and sex variables.</p>
+<div class="sourceCode" id="cb58"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb58-1"><a href="rct.html#cb58-1" tabindex="-1"></a>resume<span class="sc">$</span>BlackFemale <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">&quot;Black&quot;</span> <span class="sc">&amp;</span> resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">&quot;female&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb58-2"><a href="rct.html#cb58-2" tabindex="-1"></a>resume<span class="sc">$</span>BlackMale <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">&quot;Black&quot;</span> <span class="sc">&amp;</span> resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">&quot;male&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb58-3"><a href="rct.html#cb58-3" tabindex="-1"></a>resume<span class="sc">$</span>WhiteFemale <span class="ot">&lt;-</span> <span class="fu">ifelse</span>(resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">&quot;White&quot;</span> <span class="sc">&amp;</span> resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">&quot;female&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span>
+<span id="cb58-4"><a href="rct.html#cb58-4" tabindex="-1"></a>resume<span class="sc">$</span>WhiteMale <span class="ot">&lt;-</span><span class="fu">ifelse</span>(resume<span class="sc">$</span>race <span class="sc">==</span> <span class="st">&quot;White&quot;</span> <span class="sc">&amp;</span> resume<span class="sc">$</span>sex <span class="sc">==</span> <span class="st">&quot;male&quot;</span>, <span class="dv">1</span>, <span class="dv">0</span>)</span></code></pre></div>
+<div class="sourceCode" id="cb59"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb59-1"><a href="rct.html#cb59-1" tabindex="-1"></a><span class="co"># See the updated data set</span></span>
+<span id="cb59-2"><a href="rct.html#cb59-2" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">head</span>(resume), <span class="at">booktabs =</span> <span class="cn">TRUE</span>,  <span class="at">align =</span> <span class="st">&quot;c&quot;</span>,</span>
+<span id="cb59-3"><a href="rct.html#cb59-3" tabindex="-1"></a>             <span class="at">caption =</span> <span class="st">&quot;Adding New Dummy Variables to `resume.csv`&quot;</span>)</span></code></pre></div>
+<table>
+<caption><span id="tab:unnamed-chunk-40">Table 4.6: </span>Adding New Dummy Variables to <code>resume.csv</code></caption>
+<colgroup>
+<col width="13%" />
+<col width="10%" />
+<col width="8%" />
+<col width="7%" />
+<col width="16%" />
+<col width="13%" />
+<col width="16%" />
+<col width="13%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">firstname</th>
+<th align="center">sex</th>
+<th align="center">race</th>
+<th align="center">call</th>
+<th align="center">BlackFemale</th>
+<th align="center">BlackMale</th>
+<th align="center">WhiteFemale</th>
+<th align="center">WhiteMale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">Allison</td>
+<td align="center">female</td>
+<td align="center">white</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Kristen</td>
+<td align="center">female</td>
+<td align="center">white</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Lakisha</td>
+<td align="center">female</td>
+<td align="center">black</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Latonya</td>
+<td align="center">female</td>
+<td align="center">black</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="odd">
+<td align="center">Carrie</td>
+<td align="center">female</td>
+<td align="center">white</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+<tr class="even">
+<td align="center">Jay</td>
+<td align="center">male</td>
+<td align="center">white</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+<td align="center">0</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div id="corruption-in-indonesia" class="section level3 hasAnchor" number="4.7.2">
+<h3><span class="header-section-number">4.7.2</span> Corruption in Indonesia<a href="rct.html#corruption-in-indonesia" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<p>For the next example, we will use data from Benjamin A. Olken. 2007. “Monitoring Corruption: Evidence from a Field Experiment in Indonesia.” Journal of Political Economy, 115: 300-249.</p>
+<p>The objective of this experiment is to evaluate two interventions aimed at reducing corruption in road building projects in Indonesian villages. One treatment is audits by engineers; the other is encouraging community participation in monitoring. This problem focuses on the latter intervention, which consists of inviting villagers to public meetings where project officials account for budget expenditures. In this paper, they used stratified randomization as the assignment procedure.</p>
+<p>Here are the variables that are included in the data set:</p>
+<p>The variables in the data set are:</p>
+<ul>
+<li><code>pct_missing</code>: Percent Expenditures Missing</li>
+<li><code>treat_invite</code>: Treatment Assignment (1=“Yes; 0=”No”)</li>
+<li><code>head_edu</code>: Village Head Education</li>
+<li><code>mosques</code>: Mosques per 1,000</li>
+<li><code>pct_poor</code>: Percent of Households Below the Poverty Line</li>
+<li><code>total_budget</code>: Total Budget (Rp. Million) (Determined Prior to Intervention)</li>
+</ul>
+<p>The main dependent variable is <code>pct_missing</code>: a measure of the difference between what the villages claim they spend on road construction and an independent estimate of what the villages actually spend.</p>
+<p>Here, we will actually run the regression and conduct a t-test, but we will conduct the data exploration process as we did in the previous case study. Let’s compare the number of treated and untreated:</p>
+<div class="sourceCode" id="cb60"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb60-1"><a href="rct.html#cb60-1" tabindex="-1"></a><span class="fu">suppressMessages</span>(<span class="fu">library</span>(stargazer))</span>
+<span id="cb60-2"><a href="rct.html#cb60-2" tabindex="-1"></a></span>
+<span id="cb60-3"><a href="rct.html#cb60-3" tabindex="-1"></a><span class="co"># Generate the frequency table</span></span>
+<span id="cb60-4"><a href="rct.html#cb60-4" tabindex="-1"></a>knitr<span class="sc">::</span><span class="fu">kable</span>(<span class="fu">table</span>(<span class="fu">data.frame</span>(<span class="st">&quot;Treatment&quot;</span> <span class="ot">=</span> olken<span class="sc">$</span>treat_invite)), <span class="at">align =</span> <span class="st">&quot;c&quot;</span>, <span class="at">booktabs =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<table>
+<thead>
+<tr class="header">
+<th align="center">Treatment</th>
+<th align="center">Freq</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">0</td>
+<td align="center">191</td>
+</tr>
+<tr class="even">
+<td align="center">1</td>
+<td align="center">376</td>
+</tr>
+</tbody>
+</table>
+<p>Despite the large difference in frequencies, this is <strong>does not</strong> harm our experiment. We can still conduct a t-test later on to check the statistical significance our findings.</p>
+<p>As the data set has already undergone assignment process, with details discussed in the paper, we can now compute the Difference-in-Means (DM) to estimate ATE as follows:</p>
+<div class="sourceCode" id="cb61"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb61-1"><a href="rct.html#cb61-1" tabindex="-1"></a><span class="co"># Define the logical conditions</span></span>
+<span id="cb61-2"><a href="rct.html#cb61-2" tabindex="-1"></a>is_treatment <span class="ot">&lt;-</span> (olken<span class="sc">$</span>treat_invite <span class="sc">==</span> <span class="dv">1</span>)</span>
+<span id="cb61-3"><a href="rct.html#cb61-3" tabindex="-1"></a>is_control <span class="ot">&lt;-</span> (olken<span class="sc">$</span>treat_invite <span class="sc">==</span> <span class="dv">0</span>)</span>
+<span id="cb61-4"><a href="rct.html#cb61-4" tabindex="-1"></a></span>
+<span id="cb61-5"><a href="rct.html#cb61-5" tabindex="-1"></a><span class="co"># Calculate DM</span></span>
+<span id="cb61-6"><a href="rct.html#cb61-6" tabindex="-1"></a><span class="fu">mean</span>(olken<span class="sc">$</span>pct_missing[is_treatment], <span class="at">na.rm =</span> <span class="cn">TRUE</span>) <span class="sc">-</span> <span class="fu">mean</span>(olken<span class="sc">$</span>pct_missing[is_control], <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] -0.02314737</code></pre>
+<p>Alternatively, we can also estimate the ATE with linear regression as follows:</p>
+<div class="sourceCode" id="cb63"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb63-1"><a href="rct.html#cb63-1" tabindex="-1"></a><span class="co"># Linear Regression</span></span>
+<span id="cb63-2"><a href="rct.html#cb63-2" tabindex="-1"></a>olken_ate_estimate <span class="ot">&lt;-</span> <span class="fu">lm</span>(pct_missing <span class="sc">~</span> treat_invite, <span class="at">data =</span> olken)</span>
+<span id="cb63-3"><a href="rct.html#cb63-3" tabindex="-1"></a></span>
+<span id="cb63-4"><a href="rct.html#cb63-4" tabindex="-1"></a><span class="co"># Display the coefficients in a stargazer table</span></span>
+<span id="cb63-5"><a href="rct.html#cb63-5" tabindex="-1"></a><span class="co"># Display 8 digits to match the DM estimate</span></span>
+<span id="cb63-6"><a href="rct.html#cb63-6" tabindex="-1"></a><span class="fu">stargazer</span>(<span class="fu">coef</span>(<span class="fu">summary</span>(olken_ate_estimate)), <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, <span class="at">flip =</span> <span class="cn">TRUE</span>, <span class="at">digits =</span> <span class="dv">8</span>)</span></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(Intercept)
+</td>
+<td>
+treat_invite
+</td>
+</tr>
+<tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Estimate
+</td>
+<td>
+0.25210560
+</td>
+<td>
+-0.02314737
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Std. Error
+</td>
+<td>
+0.02699349
+</td>
+<td>
+0.03321720
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+t value
+</td>
+<td>
+9.33949600
+</td>
+<td>
+-0.69684900
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Pr(&gt; | t| )
+</td>
+<td>
+0
+</td>
+<td>
+0.48623820
+</td>
+</tr>
+<tr>
+<td colspan="3" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
+<p>We can see that the estimate is indeed the same with the Difference-in-Means (DM) estimator we previously calculated, that is -0.02314737. Additionally, we can try and rerun the regression with added covariables.</p>
+<div class="sourceCode" id="cb64"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb64-1"><a href="rct.html#cb64-1" tabindex="-1"></a><span class="co"># Multiple Linear Regression</span></span>
+<span id="cb64-2"><a href="rct.html#cb64-2" tabindex="-1"></a>olken_covariables <span class="ot">&lt;-</span> <span class="fu">lm</span>(pct_missing <span class="sc">~</span> ., olken)</span>
+<span id="cb64-3"><a href="rct.html#cb64-3" tabindex="-1"></a></span>
+<span id="cb64-4"><a href="rct.html#cb64-4" tabindex="-1"></a><span class="co"># Display the coefficients in a stargazer table</span></span>
+<span id="cb64-5"><a href="rct.html#cb64-5" tabindex="-1"></a><span class="fu">stargazer</span>(<span class="fu">coef</span>(<span class="fu">summary</span>(olken_covariables)), <span class="at">type =</span> <span class="st">&quot;html&quot;</span>, <span class="at">flip =</span> <span class="cn">TRUE</span>)</span></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="7" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+(Intercept)
+</td>
+<td>
+treat_invite
+</td>
+<td>
+head_edu
+</td>
+<td>
+mosques
+</td>
+<td>
+pct_poor
+</td>
+<td>
+total_budget
+</td>
+</tr>
+<tr>
+<td colspan="7" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Estimate
+</td>
+<td>
+0.390
+</td>
+<td>
+-0.026
+</td>
+<td>
+-0.006
+</td>
+<td>
+-0.048
+</td>
+<td>
+-0.118
+</td>
+<td>
+0.001
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Std. Error
+</td>
+<td>
+0.087
+</td>
+<td>
+0.033
+</td>
+<td>
+0.006
+</td>
+<td>
+0.019
+</td>
+<td>
+0.075
+</td>
+<td>
+0.0003
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+t value
+</td>
+<td>
+4.491
+</td>
+<td>
+-0.797
+</td>
+<td>
+-0.949
+</td>
+<td>
+-2.540
+</td>
+<td>
+-1.574
+</td>
+<td>
+1.846
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Pr(&gt; | t| )
+</td>
+<td>
+0.00001
+</td>
+<td>
+0.426
+</td>
+<td>
+0.343
+</td>
+<td>
+0.011
+</td>
+<td>
+0.116
+</td>
+<td>
+0.066
+</td>
+</tr>
+<tr>
+<td colspan="7" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
+<p>We can see that the estimate did indeed change by approximately 0.003, as it is now -0.026.</p>
+<p>As we add covariables, we must check the covariate balance in this data set. For example, here we check whether the education of the head of the household is roughly the same between the treatment and control groups with a t-test.</p>
+<div class="sourceCode" id="cb65"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb65-1"><a href="rct.html#cb65-1" tabindex="-1"></a><span class="co"># Conduct a t-test for head of household education</span></span>
+<span id="cb65-2"><a href="rct.html#cb65-2" tabindex="-1"></a>t_head_edu <span class="ot">&lt;-</span> <span class="fu">t.test</span>(olken<span class="sc">$</span>head_edu[is_treatment], olken<span class="sc">$</span>head_edu[is_control])</span></code></pre></div>
+<table style="width:100%;">
+<caption><span id="tab:unnamed-chunk-46">Table 4.7: </span>Estimation with t-test, and the 95% CI</caption>
+<colgroup>
+<col width="17%" />
+<col width="17%" />
+<col width="29%" />
+<col width="17%" />
+<col width="16%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="center">Estimate</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+<th align="center">CI Lower</th>
+<th align="center">CI Upper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="center">-0.0686555</td>
+<td align="center">-0.2849279</td>
+<td align="center">0.7758529</td>
+<td align="center">-0.5424163</td>
+<td align="center">0.4051052</td>
+</tr>
+</tbody>
+</table>
+<p>In this illustration, we will use a t-test, but we show that you can run a linear regression model with the covariable as the dependent variable (e.g <code>head_edu</code>), and the treatment assignment as the independent variable. The results will be the same.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-47">Table 4.8: </span>Linear Model Estimation</caption>
+<colgroup>
+<col width="18%" />
+<col width="17%" />
+<col width="17%" />
+<col width="17%" />
+<col width="28%" />
+</colgroup>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">Estimate</th>
+<th align="center">Std. Error</th>
+<th align="center">t value</th>
+<th align="center">Pr(&gt;|t|)</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="center">11.5026178</td>
+<td align="center">0.1958546</td>
+<td align="center">58.7303973</td>
+<td align="center">0.0000000</td>
+</tr>
+<tr class="even">
+<td align="left">treat_invite</td>
+<td align="center">-0.0686555</td>
+<td align="center">0.2410543</td>
+<td align="center">-0.2848135</td>
+<td align="center">0.7758923</td>
+</tr>
+</tbody>
+</table>
+<p>We may see minor differences of the 95% CI with the t-test caused by the definition of the functions in R. These are not to be considered, and the values are still practically identical.</p>
+<table>
+<caption><span id="tab:unnamed-chunk-48">Table 4.9: </span>Linear Model 95% CI</caption>
+<thead>
+<tr class="header">
+<th align="left"></th>
+<th align="center">CI Lower</th>
+<th align="center">CI Upper</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td align="left">(Intercept)</td>
+<td align="center">11.1179184</td>
+<td align="center">11.8873172</td>
+</tr>
+<tr class="even">
+<td align="left">treat_invite</td>
+<td align="center">-0.5421367</td>
+<td align="center">0.4048256</td>
+</tr>
+</tbody>
+</table>
+<p>Next, we will repeat the same process as above for the other covariables:</p>
+<div class="sourceCode" id="cb66"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb66-1"><a href="rct.html#cb66-1" tabindex="-1"></a><span class="co"># Conducts a t-test for mosques</span></span>
+<span id="cb66-2"><a href="rct.html#cb66-2" tabindex="-1"></a>t_mosques <span class="ot">&lt;-</span> <span class="fu">t.test</span>(olken<span class="sc">$</span>mosques[is_treatment], olken<span class="sc">$</span>mosques[is_control])</span>
+<span id="cb66-3"><a href="rct.html#cb66-3" tabindex="-1"></a></span>
+<span id="cb66-4"><a href="rct.html#cb66-4" tabindex="-1"></a><span class="co"># Conducts a t-test for pct_poor</span></span>
+<span id="cb66-5"><a href="rct.html#cb66-5" tabindex="-1"></a>t_pct_poor <span class="ot">&lt;-</span> <span class="fu">t.test</span>(olken<span class="sc">$</span>pct_poor[is_treatment], olken<span class="sc">$</span>pct_poor[is_control])</span>
+<span id="cb66-6"><a href="rct.html#cb66-6" tabindex="-1"></a></span>
+<span id="cb66-7"><a href="rct.html#cb66-7" tabindex="-1"></a><span class="co"># Conducts a t-test for total_budget</span></span>
+<span id="cb66-8"><a href="rct.html#cb66-8" tabindex="-1"></a>t_total_budget <span class="ot">&lt;-</span> <span class="fu">t.test</span>(olken<span class="sc">$</span>total_budget[is_treatment], olken<span class="sc">$</span>total_budget[is_control])</span></code></pre></div>
+<p>We can tabulate all the results as follows:</p>
+<div class="sourceCode" id="cb67"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb67-1"><a href="rct.html#cb67-1" tabindex="-1"></a><span class="co"># The following code creates the table</span></span>
+<span id="cb67-2"><a href="rct.html#cb67-2" tabindex="-1"></a>results <span class="ot">&lt;-</span> <span class="fu">matrix</span>(<span class="at">nrow =</span> <span class="dv">4</span>, <span class="at">ncol =</span> <span class="dv">4</span>, <span class="cn">NA</span>)</span>
+<span id="cb67-3"><a href="rct.html#cb67-3" tabindex="-1"></a></span>
+<span id="cb67-4"><a href="rct.html#cb67-4" tabindex="-1"></a><span class="fu">rownames</span>(results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;Control&quot;</span>, <span class="co"># Control Group Mean</span></span>
+<span id="cb67-5"><a href="rct.html#cb67-5" tabindex="-1"></a>                       <span class="st">&quot;Treatment&quot;</span>, <span class="co"># Treatment Group Mean</span></span>
+<span id="cb67-6"><a href="rct.html#cb67-6" tabindex="-1"></a>                       <span class="st">&quot;Difference&quot;</span>, <span class="co"># Difference in Means Between Treatment and Control </span></span>
+<span id="cb67-7"><a href="rct.html#cb67-7" tabindex="-1"></a>                       <span class="st">&quot;P-value&quot;</span>) <span class="co"># Associated P-value</span></span>
+<span id="cb67-8"><a href="rct.html#cb67-8" tabindex="-1"></a></span>
+<span id="cb67-9"><a href="rct.html#cb67-9" tabindex="-1"></a><span class="fu">colnames</span>(results) <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">&quot;head_edu&quot;</span>, <span class="st">&quot;mosques&quot;</span>, <span class="st">&quot;pct_poor&quot;</span>, <span class="st">&quot;total_budget&quot;</span>)</span>
+<span id="cb67-10"><a href="rct.html#cb67-10" tabindex="-1"></a></span>
+<span id="cb67-11"><a href="rct.html#cb67-11" tabindex="-1"></a><span class="co"># Let&#39;s enter our data</span></span>
+<span id="cb67-12"><a href="rct.html#cb67-12" tabindex="-1"></a>results[, <span class="dv">1</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(t_head_edu<span class="sc">$</span>estimate[<span class="dv">1</span>], t_head_edu<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
+<span id="cb67-13"><a href="rct.html#cb67-13" tabindex="-1"></a>                 t_head_edu<span class="sc">$</span>estimate[<span class="dv">2</span>] <span class="sc">-</span> t_head_edu<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
+<span id="cb67-14"><a href="rct.html#cb67-14" tabindex="-1"></a>                 t_head_edu<span class="sc">$</span>p.value)</span>
+<span id="cb67-15"><a href="rct.html#cb67-15" tabindex="-1"></a></span>
+<span id="cb67-16"><a href="rct.html#cb67-16" tabindex="-1"></a>results[, <span class="dv">2</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(t_mosques<span class="sc">$</span>estimate[<span class="dv">1</span>], t_mosques<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
+<span id="cb67-17"><a href="rct.html#cb67-17" tabindex="-1"></a>                 t_mosques<span class="sc">$</span>estimate[<span class="dv">2</span>] <span class="sc">-</span> t_mosques<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
+<span id="cb67-18"><a href="rct.html#cb67-18" tabindex="-1"></a>                 t_mosques<span class="sc">$</span>p.value)</span>
+<span id="cb67-19"><a href="rct.html#cb67-19" tabindex="-1"></a></span>
+<span id="cb67-20"><a href="rct.html#cb67-20" tabindex="-1"></a>results[, <span class="dv">3</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(t_pct_poor<span class="sc">$</span>estimate[<span class="dv">1</span>], t_pct_poor<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
+<span id="cb67-21"><a href="rct.html#cb67-21" tabindex="-1"></a>                 t_pct_poor<span class="sc">$</span>estimate[<span class="dv">2</span>] <span class="sc">-</span> t_pct_poor<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
+<span id="cb67-22"><a href="rct.html#cb67-22" tabindex="-1"></a>                 t_pct_poor<span class="sc">$</span>p.value)</span>
+<span id="cb67-23"><a href="rct.html#cb67-23" tabindex="-1"></a></span>
+<span id="cb67-24"><a href="rct.html#cb67-24" tabindex="-1"></a>results[, <span class="dv">4</span>] <span class="ot">&lt;-</span> <span class="fu">c</span>(t_total_budget<span class="sc">$</span>estimate[<span class="dv">1</span>], t_total_budget<span class="sc">$</span>estimate[<span class="dv">2</span>],</span>
+<span id="cb67-25"><a href="rct.html#cb67-25" tabindex="-1"></a>                 t_total_budget<span class="sc">$</span>estimate[<span class="dv">2</span>] <span class="sc">-</span> t_total_budget<span class="sc">$</span>estimate[<span class="dv">1</span>],</span>
+<span id="cb67-26"><a href="rct.html#cb67-26" tabindex="-1"></a>                 t_total_budget<span class="sc">$</span>p.value)</span>
+<span id="cb67-27"><a href="rct.html#cb67-27" tabindex="-1"></a></span>
+<span id="cb67-28"><a href="rct.html#cb67-28" tabindex="-1"></a><span class="co"># Print out the table</span></span>
+<span id="cb67-29"><a href="rct.html#cb67-29" tabindex="-1"></a><span class="fu">stargazer</span>(results, <span class="at">type =</span> <span class="st">&quot;html&quot;</span>)</span></code></pre></div>
+<table style="text-align:center">
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+</td>
+<td>
+head_edu
+</td>
+<td>
+mosques
+</td>
+<td>
+pct_poor
+</td>
+<td>
+total_budget
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Control
+</td>
+<td>
+11.434
+</td>
+<td>
+1.412
+</td>
+<td>
+0.414
+</td>
+<td>
+80.223
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Treatment
+</td>
+<td>
+11.503
+</td>
+<td>
+1.474
+</td>
+<td>
+0.405
+</td>
+<td>
+81.983
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+Difference
+</td>
+<td>
+0.069
+</td>
+<td>
+0.062
+</td>
+<td>
+-0.009
+</td>
+<td>
+1.760
+</td>
+</tr>
+<tr>
+<td style="text-align:left">
+P-value
+</td>
+<td>
+0.776
+</td>
+<td>
+0.405
+</td>
+<td>
+0.640
+</td>
+<td>
+0.674
+</td>
+</tr>
+<tr>
+<td colspan="5" style="border-bottom: 1px solid black">
+</td>
+</tr>
+</table>
+<p>Looking at the t-tests, all the p-values are greater than 0.1. We fail to reject the null hypothesis that the true difference in means is equal to zero and thus it seems that the two groups are balanced.</p>
+<p>We show that we are comparing apples with apples.</p>
+
+</div>
+</div>
+</div>
+            </section>
+
+          </div>
+        </div>
+      </div>
+<a href="regression.html" class="navigation navigation-prev " aria-label="Previous page"><i class="fa fa-angle-left"></i></a>
+<a href="iv.html" class="navigation navigation-next " aria-label="Next page"><i class="fa fa-angle-right"></i></a>
+    </div>
+  </div>
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<script>
+gitbook.require(["gitbook"], function(gitbook) {
+gitbook.start({
+"sharing": {
+"github": false,
+"facebook": true,
+"twitter": true,
+"linkedin": false,
+"weibo": false,
+"instapaper": false,
+"vk": false,
+"whatsapp": false,
+"all": ["facebook", "twitter", "linkedin", "weibo", "instapaper"]
+},
+"fontsettings": {
+"theme": "white",
+"family": "sans",
+"size": 2
+},
+"edit": {
+"link": null,
+"text": null
+},
+"history": {
+"link": null,
+"text": null
+},
+"view": {
+"link": null,
+"text": null
+},
+"download": null,
+"search": {
+"engine": "fuse",
+"options": null
+},
+"toc": {
+"collapse": "subsection"
+}
+});
+});
+</script>
+
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+  (function () {
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    var src = "true";
+    if (src === "" || src === "true") src = "https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.9/latest.js?config=TeX-MML-AM_CHTML";
+    if (location.protocol !== "file:")
+      if (/^https?:/.test(src))
+        src = src.replace(/^https?:/, '');
+    script.src = src;
+    document.getElementsByTagName("head")[0].appendChild(script);
+  })();
+</script>
+</body>
+
+</html>

@@ -1,0 +1,205 @@
+# Statistics and Regression with R {#regression}
+
+Before we start doing any analysis, let's setup our working directory. Moreover,
+because the data sets we'll be working with are relatively small, we can just
+load both files and assign them to two unique variables.
+
+```{r}
+# Here we setup our working directory, i.e. the location of the folder we are using
+setwd("/Users/theoobadiahteguh/R_Programming/ECON3284/ProblemSet1")
+
+# Now we combine the directory path and the file name to obtain the full path
+advertising <- read.csv(file.path(getwd(), "Advertising.csv"))
+auto <- read.csv(file.path(getwd(), "Auto.csv"))
+```
+
+Now that we have loaded the data, we can begin our analysis and answer the 
+questions in the second section.
+
+## Linear Regression
+
+For questions 1 to 3 we will use the "Advertising" data set. Let's first see the structure of the data:
+
+```{r}
+str(auto)
+```
+
+Let us now create the model in our R environment and create a plot to 
+visualize the data with the model:
+
+```{r}
+model_q1 <- lm(sales ~ TV, advertising)
+
+attach(advertising)
+plot(TV, sales, xlab = "TV Advertising Budget", ylab = "Sales")
+abline(model_q1, col = "navy")
+```
+
+We can also generate a summary of the model:
+
+```{r}
+summary(model_q1)
+```
+
+From this summary we can answer parts (a) to (c):\
+a.) Beta(1) = 0.047537\
+b.) Standard Error of Beta(1) = 0.002691\
+c.) The t-statistic of Beta(1) = 17.67 and it is statistically significant as it has a p-value smaller than 0.001, and thus we reject the null hypothesis.\
+d.) If there is zero budget for TV Advertising, then the sales will simply be the
+y-intercept of the model, that is equal to 7.032594.\
+e.) Finally the R-Squared is 0.6119 and we can interpret it as "61.19% of the
+change in sales can be explained by the variability of TV Advertising."\
+
+## Multiple Linear Regression
+Let us now create the second model. We will not visualize this model but we can 
+still generate a cohesive summary.
+
+```{r}
+model_q2 <- lm(sales ~ TV + radio + newspaper, advertising)
+summary(model_q2)
+```
+
+Thus, we can answer the questions based on the summary:
+
+a.) Estimated beta(2) = 0.188530\
+b.) Standard error of beta(3): = 0.005871\
+c.) The t-statistic of beta(3) = -0.177 and the p-value is much larger than 0.1,
+so we fail to reject the null hypothesis and it is not statistically significant.\
+d.) Adjusted R-Squared = 0.8956 and it can be explained as "the variability of Y that can be explained by the regression model, i.e. the variability of X1, X2, and X3". In other words, 89.56% of the variability of Sales can be explained by the TV, Radio, and Newspaper variables.\
+e.) The F-statistic = 570.3 and as the p-value of F-statistic value is nearly 0 which is much smaller than 0.001, we can conclude that at least one of the coefficients is non-zero.\
+
+## Adding Interaction Variables
+Let us now create the third model. Again, we will not visualize this model but 
+we can still generate a cohesive summary.
+
+```{r}
+model_q3 <- lm(sales ~ TV + radio + TV : radio, advertising)
+summary(model_q3)
+```
+
+From this summary we can answer part (a), and find the value of beta(3) in the following manner so that it is readable:
+
+```{r}
+summary(model_q3)$coefficients[4]
+```
+
+And then, we can calculate part (b) as follows: 
+```{r}
+5 * summary(model_q3)$coefficients[3] + summary(model_q3)$coefficients[4] * 200 * 5 
+```
+
+## Putting it All Together
+Now, for this question we will use the "Auto" data set. Let's first see the structure of the data:
+
+```{r}
+str(auto)
+```
+
+a.) We will now create a linear model with mpg as the response and horsepower as the predictor, and generate a summary
+```{r}
+# Creating the model
+model_q4a <- lm(mpg ~ horsepower, auto)
+
+# Generating the summary
+summary(model_q4a)
+```
+
+From the summary, we can clearly see that:\
+i.) There is a relationship between our predictor and response, and our predictor is statistically significant as the p-value is less than 0.001.\
+ii.) We see that the value of R-Squared is 0.6059, and the relationship is somewhat at moderate strength.\
+iii.) The relationship is a negative relationship, as reflected by beta(horsepower) of -0.157845.\
+iv.) If we have 98 horsepower then we would predict the mpg to be:
+```{r}
+summary(model_q4a)$ coefficients[1] + 98 * summary(model_q4a)$coefficients[2]
+```
+
+Additionally, we can also calculate the 95% confidence intervals:
+```{r}
+# We can use this for the confidence interval of the model
+confint(model_q4a, level =  0.95)
+
+# We can use this for the confidence interval of the prediction if we have 98 horsepower
+# We can input the values of one or more predictors in the data frame
+predict(model_q4a, data.frame(horsepower = 98), interval = "confidence")
+```
+
+b.) We can also plot our model as follows:
+```{r}
+attach(auto)
+plot(horsepower, mpg, xlab = "Horsepower", ylab = "Miles per Gallon")
+abline(model_q4a, col = "navy")
+```
+
+c.) We will now create diagnostic plots. To do this, we use the broom library:
+
+```{r}
+library(broom)
+
+model.diag.metrics <- augment(model_q4a)
+par(mfrow = c(2, 2))
+plot(model_q4a)
+```
+
+There are a few things that have been highlighted by the diagnostic plots:\
+1.) The **Residuals vs Fitted** plot has a slightly curved convex line, suggesting
+that the relationship may not be linear.\
+2.) The **Normal Q-Q** plot shows that the residual points follow the straight dashed line relatively well, although it is also slightly convex in shape. This suggests that the residuals may not completely follow a normal distribution.\
+3.) The **Scale-Location (or Spread-Location)** plot shows a convex or bent v-shaped line with a high concentration of points on the right, suggesting that we may have a heteroscedasticity problem.\
+4.) The **Residuals vs Leverage** plot shows that there aren't any "influential" variables.
+
+d.) We will now create a scatter plot matrix with base R:
+```{r}
+plot(auto)
+```
+
+Alternatively, a more reasonable and tidier way is to use the function pairs(), and we must exclude the "name" variable as it is qualitative:
+
+```{r}
+# We can set the plotting "character" with the pch value
+pairs(auto[,-9], pch = 18)
+```
+
+e.) We can also create a matrix of correlations and visualize it with the corrplot library:
+```{r}
+# We exclude the "name" column from the data frame
+corr_matrix <- cor(auto[, -9])
+corr_matrix
+```
+
+```{r}
+library(corrplot)
+
+# Generating the matrix visualization
+corrplot(corr_matrix, method = "color")
+```
+
+f.) Finally we can create a multiple linear regression model from the Auto data set and generate its summary: 
+
+```{r}
+# Here we include every variable except for "name"
+model_q4f <- lm(mpg ~ .-name, auto)
+summary(model_q4f)
+```
+
+We can now answer the following sections:\
+i.) There is a relationship between the predictors and the response. The model has an F-statistic of 252.4 with a p-value of less than 0.001 classifying it as statistically significant. Moreover, the relationship of the predictors and the response is quite strong as the adjusted R-Squared value is 0.8182.\
+ii.) The "displacement" predictor is statistically significant with a p-value less than 0.01. We also have weight, year, and origin with p-values smaller than 0.001.\
+iii.) The year coefficient suggests that over time, the number of miles per gallon increases. This makes sense because as time passes we expect technological improvement such that engines become more efficient.\
+
+g.) We then plot the diagnostic plots as we did in a previous section:
+```{r}
+# library(broom)
+
+model.diag.metrics <- augment(model_q4f)
+par(mfrow = c(2, 2))
+plot(model_q4f)
+```
+
+There are a few things that have been highlighted by the diagnostic plots:\
+1.) The **Residuals vs Fitted** plot has a slightly curved convex line, suggesting
+that the relationship may not be linear.\
+2.) The **Normal Q-Q** plot shows that the residual points somewhat follow the straight dashed line, although it deviates upward on the right side of the plot. This suggests that the residuals may not completely follow a normal distribution.\
+3.) The **Scale-Location (or Spread-Location)** plot shows a no perfectly straight horizontal line with a high concentration of points on the middle and the right, suggesting that we may have a heteroscedasticity problem.\
+4.) The **Residuals vs Leverage** plot shows that there aren't any "influential" variables, as no observation falls outside the Cook's distance line.
+
+Thus, we conclude this first problem set.

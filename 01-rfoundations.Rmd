@@ -1,0 +1,8 @@
+# R Foundations {#rfoundations}
+
+## Basic Syntax
+
+## Visualization with R {#rfoundations}
+
+## Visualization with ggplot2 {#rfoundations}
+

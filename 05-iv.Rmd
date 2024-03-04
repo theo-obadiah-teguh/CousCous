@@ -1,0 +1,318 @@
+# Instrumental Variables {#iv}
+## Framework and Assumptions
+
+**Assumptions**   
+Here, we discuss four assumptions that are necessary for a valid IV.
+
+**Independence**. 
+'z' is as good as randomly assigned.
+
+**Exclusion Restriction**   
+'z' does not affect 'Y' directly, or in another words, once we know 'D', we don't need to know 'z'.
+**Relevance**  
+'z' has some power to influence the treatment.
+
+**Monotonicity** 
+subjects receiving the treatment assignment ('z' = 1) are more likely to actually get treated ('D' = 1), and there are no cases of 'defiers', that is people whom we don't want to treat who actually get treated.
+
+### Question 2
+Now, with these assumptions in mind, we can derive the two-stage least squares (2SLS) estimator in the mincer regression of return to schooling.
+
+In the mis-specified Mincer regression, we have:
+```{=latex}
+\begin{align}
+Y_{i} & = \alpha + \rho S_{i} + \eta_{i} \\
+\eta_{i} & = \gamma A_{i} + \nu_{i}
+\end{align}
+```
+
+Suppose an IV 'Z' that is correlated with 'S', let's estimate the model with 'Z'.
+```{=latex}
+\begin{align}
+Cov(Y, Z) & = Cov(\alpha + \rho S +  \gamma A + \nu, Z) \\
+& = \rho Cov(S, Z) + \gamma Cov(A, Z) + Cov(\nu, Z)
+\end{align}
+```
+
+Now, suppose the two following conditions hold:
+```{=latex}
+\begin{align}
+& 1.) \, Cov(S, Z) \neq 0 - \text{"first stage" exists. 'S' and 'Z' are correlated.} \\
+& 2.) \, Cov(A, Z) = Cov(\nu, Z) = 0 - \text{"exclusion restriction".} \\
+& \text{'Z' is orthogonal to the factors in } \eta \text{, such as unobserved ability or structural disturbance term, } \eta .
+\end{align}
+```
+
+```{=latex}
+\begin{align}
+\rho_{IV} = \frac{Cov(Y, Z)}{Cov(S, Z)} = \rho
+\end{align}
+```
+
+Summing up the above procedures, we have a structural model.
+```{=latex}
+\begin{align}
+Y_{i} & = \alpha + \rho S_{i} + \eta_{i} \\
+\eta_{i} & = \gamma A_{i} + \nu_{i}
+\end{align}
+```
+
+We have the first stage regression.
+```{=latex}
+\begin{align}
+S_{i} = \alpha + \rho Z_{i} + \zeta_{i}
+\end{align}
+```
+
+```{=latex}
+\begin{align}
+\text{By which we calculate the fitted value } \widehat{S}
+\end{align}
+```
+
+And we have the second stage regression.
+```{=latex}
+\begin{align}
+Y_{i} = \alpha + \rho S_{i} + \nu_{i}
+\end{align}
+```
+
+Finally, we can calculate the Wald estimator, which is exactly the two-stage least square (2SLS) estimator.
+
+```{=latex}
+\begin{align}
+\rho_{IV} = \frac{Cov(Y, Z)}{Cov(S, Z)} = \rho
+\end{align}
+```
+
+### Question 3
+Let's examine the validity of bad weather as an IV in studying the effect of the scale of street protests on policy changes. We assess the four assumptions that are necessary for a valid IV.\
+
+a.) **Independence**: bad weather is somewhat randomly assigned, however nowadays with good weather forecasts people can have numerical expectations on weather, thus the covariance of bad weather with protests may not be zero. Therefore independence is questionable.\
+b.) **Exclusion Restriction**: bad weather does not affect policy directly. Therefore, this assumption is fulfilled.\
+c.) **Relevance**: bad weather has some power to influence the treatment, that is the protests. Thus, this assumption is fulfilled.\
+d.) **Monotonicity**: subjects receiving bad weather assignment ('z' = 1) are less likely to actually do protests ('D' = 1), and there could be 'defiers'. The problem is that nowadays any type of policy can receive 'soft form protests' through social media, and if taken to the extreme, public officials can receive backlash in certain cases. Thus, there will be no 'pure' instance of policy without treatment.
+
+## Section 2: Applied Problems
+### Question 1 (IV Regression with Simulated Data)
+In this exercise, we will generate some data and then use them to show how IVs work in regression. Let's first load the package "MASS" which has a multivariate normal distribution function mvrnorm().
+```{r}
+suppressMessages(library(MASS))
+```
+
+We also load the package "AER" which will be used to conduct IV regression.
+```{r}
+suppressMessages(library(AER))
+```
+
+Additionally, we will load the package "stargazer" to create regression tables.
+```{r}
+suppressMessages(library(stargazer))
+```
+
+Finally, we have to load all the data set for this problem set.
+```{r}
+setwd("~/R_Programming/ECON3284/ProblemSet3")
+ajr <- read.csv(file.path(getwd(), "ajr.csv"))
+```
+
+#### Part A (Simulating Data for IV Regression)
+We simulate data for two-stage least squares estimation using the following procedure:
+
+i.) We set the seed of the random number generator to 1234. 
+```{r}
+set.seed(1234)
+```
+
+ii.) We first define a variable called 'n' to use as our sample size.
+```{r}
+n <- 1000
+```
+
+iii.) We create a matrix called Rho that will serve as the variance covariance
+matrix of the error terms 'e' and 'v' in the simulation. Set the variance
+of each to '1' and the correlation between them to '0.5'. 
+```{r}
+Rho <- matrix(c(1, 0.5, 0.5, 1), 2, 2, byrow = TRUE)
+```
+
+iv.) We make 'n' bivariate normal draws with mean zero and variance-covariance matrix 'Rho'. We store the result as 'sims'. 
+```{r}
+sims <- mvrnorm(n, c(0, 0), Rho)
+```
+
+v.) We extract the first column of 'sims' and store it as a vector called 'e'. Then,
+we extract the second column and store it as a vector called 'v'. 
+```{r}
+e <- sims[,1] ; v <- sims[,2]
+```
+
+vi.) We make 'n' Uniform(0,1) random draws and store the result in a vector called 'z'. 
+```{r}
+z <- runif(n)
+```
+
+vii.) We generate a vector called 'x' using the IV first-stage equation with pi
+zero = 0.5 and pi one = 0.08. 
+```{r}
+x <- 0.5 + 0.8 * z + v
+```
+
+viii.) We generate a vector called 'y' using the IV structural equation with beta
+zero = -0.3 and beta one = 1. 
+```{r}
+y <- -0.3 + x + e
+```
+
+#### Part B (Ordinary Least Squares)
+At this stage, we run an OLS regression of 'y' on 'x'.
+```{r, results = 'asis'}
+ols_results <- lm(y ~ x)
+stargazer(ols_results, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+These results do not give the causal effect of 'x' on 'y' because when we first defined 'x' and 'y', we used the error terms 'e' and 'v'. These two error terms, by design, were correlated with each other, and that means we may overestimate or underestimate the correlation between 'x' and 'y'.
+
+#### Part C (Two Stage Least Squares by Hand)
+i.) Here we first run an OLS regression of 'x' on 'z' store the result as 'first_stage'.
+```{r, results = 'asis'}
+first_stage_q1 <- lm(x ~ z)
+stargazer(first_stage_q1, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+ii.) Then, we run an OLS regression of 'y' on 'z' and store the result as 'reduced_form'.
+```{r, results = 'asis'}
+reduced_form_q1 <- lm(y ~ z)
+stargazer(reduced_form_q1, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+iii.) Now, we divide the slope from 'reduced_form' by the slope from 'first_stage'.
+```{r}
+summary(reduced_form_q1)$coefficients[2] /
+summary(first_stage_q1)$coefficients[2]
+```
+
+iv.) What we have done in the previous steps is compute the first stage of a 2SLS model, along with a reduced form of the model. We then extract the two betas, and dividing the reduced form by the first stage estimator, we calculate the Wald estimator which is actually precisely the so-called 2SLS estimator.
+
+#### Part D (IV Regression)
+i.) Here, we use 'ivreg' to carry out IV regression that we did by hand in the preceding exercise and then store the results as 'iv_results'.
+```{r}
+iv_results <- ivreg(y ~ x | z)
+```
+
+ii.) Then we display the IV results using 'stargazer'.
+```{r, results = 'asis'}
+stargazer(iv_results, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+iii.) Additionally, we calculate an approximate 95% confidence interval for the causal effect of 'x' on 'y' using 'iv_results'.
+```{r}
+confint(iv_results, parm = 'x', level = 0.95)
+```
+
+iv.) If we view the results in part C and D, we will find that we obtain the same causality from the manual 2SLS approach and the direct 'ivreg' function.
+
+### Question 2 (Colonial Origins of Comparative Development, AJR)
+In this exercise, we'll work with a data set from the paper 'The Colonial Origins of Comparative Development' by Acemoglu, Johnson, and Robinson. I'll refer the paper as AJR in the rest of this document.
+
+#### Part A (Background)
+i.) AJR tries to answer the effect of institutions on income per capita.\
+
+ii.) The core of AJR's theory is based on several things. Firstly, they separate countries based on types of European colonization styles that they encountered in the past. They argued that places with higher feasibility of settlement allowed historical Europeans to construct proper European-style institutions with a focus on private property and checks against government power. Countries that fall into this category include Australia, New Zealand, Canada, and the United States. However, if the colonizers viewed a region to be difficult, then they would set up 'extraction states' that served a purpose of sending back resources to the colonialists' mainland. Therefore, summarizing the logic, it can be depicted as follows:\
+(potential) settler mortality --> settlements --> early institutions --> current institutions --> current --> performance.\
+
+iii.) For 'z' to be a valid instrument, it must satisfy two key assumptions. First it must be relevant: correlated with 'x'. Second, it must be excluded: it must only be related to y through its effect on 'x'. In the context of AJR, these assumptions mean that settler mortality must be correlated with the availability of institutions, and it must only be related with GDP per capita through its effects on the availability of institutions.
+
+#### Part B (OLS Regression)
+i.) First we regress 'loggdp' on 'risk' and store the result in an object called "ols".
+``` {r}
+ols <- lm(loggdp ~ risk, data = ajr)
+```
+
+ii.) Then we display the model summary.
+```{r, results = 'asis'}
+stargazer(ols, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+iii.) We can't interpret the results of 'ols' causally because we know the possibility of better institutions resulting in better developed countries; however, countries with high GDP or income can afford better institutions. Therefore, there is a simultaneous causality bias i.e 'x' causes 'y' and 'y' causes 'x'. Additionally, there are many omitted determinants of income differences that will naturally be correlated with institutions. Finally, the measures of institutions are constructed ex 
+post, and the analysts may have had a natural bias in seeing better institutions in richer places. As well as these problems introducing positive bias in the OLS estimates, the fact that the institutions variable is measured with considerable error and corresponds poorly to the "cluster of institutions" that matter in practice creates 
+attenuation and may bias the OLS estimates downwards.
+
+#### Part C (IV Regression)
+i.) Now, we estimate the first-stage regression of 'risk' on 'logmort0' and store our results in an object called "first_stage".
+```{r}
+first_stage <- lm(risk ~ logmort0, data = ajr)
+```
+
+Then we display this model's summary.
+```{r, results = 'asis'}
+stargazer(first_stage, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+ii.) We estimate the reduced-form regression of 'loggdp' on 'logmort0' and we store our results in an object called 'reduced_form'.
+```{r}
+reduced_form <- lm(loggdp ~ logmort0, data = ajr)
+```
+
+Then we display this model's summary.
+```{r, results = 'asis'}
+stargazer(reduced_form, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+iii.) Additionally, we use the 'ivreg' function from 'AER' to carry out an IV regression of 'loggdp' on 'risk' using 'logmort0' as an instrument for 'risk' and then store our results in an object called 'iv'.
+```{r}
+iv <- ivreg(loggdp ~ risk | logmort0, data = ajr)
+```
+
+We also display this model's summary.
+```{r, results = 'asis'}
+stargazer(iv, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+iv.) Looking at the summary of 'iv', the results are actually larger compared to 'ols', i.e 'risk' has higher causality.
+
+v.) If we use the manual 2SLS approach with 'first_stage' and 'reduced_form', we will also get the same result.
+```{r}
+summary(reduced_form)$coefficients[2] / summary(first_stage)$coefficients[2]
+```
+
+#### Part D (Critique)
+Let's consider a potential criticism of AJR. The critique depends on two claims. \
+Claim #1: a country's current disease environment, e.g. the prevalence of malaria, is an important determinant of GDP/capita. \
+Claim #2: a country's disease environment today depends on its disease environment in the past, which in turn affected early European settler mortality. \
+
+i.) Both claims taken together would call into question the IV results from Part C above as initially we would combine 'malaria' into 'u', i.e the noise factor. This is problematic because that means a part of 'u' is actually correlated with our IV, making it invalid. Also, it means that a part of 'u' actually causes higher GDP, and therefore we are missing an important component. \
+
+ii.) We should consider re-running our IV analysis from Part C including malaria as an additional regressor because hopefully, as we separate malaria from 'u', we can get an IV that is not correlated with 'u'. \
+
+iii.) Here, we repeat Part B including malaria as an additional regressor.
+```{r}
+updated_ols <- lm(loggdp ~ risk + malaria, data = ajr)
+```
+
+We display the results in the following table.
+```{r, results = 'asis'}
+stargazer(updated_ols, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+iv.) Then, we repeat the first section of Part C, adding malaria to the first-stage regression.
+``` {r}
+updated_first_stage <- lm(risk + malaria ~ logmort0 + malaria, data = ajr)
+```
+
+We display the results in the following table.
+```{r, results = 'asis'}
+stargazer(updated_first_stage, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+v.) Additionally, we also repeat the third section of Part C, including malaria in the IV regression. We treat malaria as exogenous.
+```{r}
+updated_iv <- ivreg(loggdp ~ risk + malaria | logmort0 + malaria, data = ajr)
+```
+
+We display the results in the following table.
+```{r, results = 'asis'}
+stargazer(updated_iv, type = 'html', omit.stat = c('f', 'ser'), header = FALSE)
+```
+\
+vi.) The criticism of AJR based on a country's disease environment is valid, because here we can clearly see that institutions as a causal factor is comparably weaker in this model as we add malaria as an additional regressor.

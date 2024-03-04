@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+<head>
+
+  <meta charset="utf-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <title>Couscous: A Practical Guide to Causal Inference</title>
+  <meta name="description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="generator" content="bookdown #bookdown:version# and GitBook 2.6.7" />
+
+  <meta property="og:title" content="Couscous: A Practical Guide to Causal Inference" />
+  <meta property="og:type" content="book" />
+  
+  <meta property="og:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  <meta name="github-repo" content="rstudio/bookdown-demo" />
+
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:title" content="Couscous: A Practical Guide to Causal Inference" />
+  
+  <meta name="twitter:description" content="This is a minimal example of using the bookdown package to write a book. The output format for this example is bookdown::gitbook." />
+  
+
+<meta name="author" content="Theo Obadiah Teguh" />
+
+
+<meta name="date" content="2023-12-26" />
+
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+  
+  
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+<script src="libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/fuse.js@6.4.6/dist/fuse.min.js"></script>
+<link href="libs/gitbook-2.6.7/css/style.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-table.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-bookdown.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-highlight.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-search.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-fontsettings.css" rel="stylesheet" />
+<link href="libs/gitbook-2.6.7/css/plugin-clipboard.css" rel="stylesheet" />
+<script src="libs/gitbook-2.6.7/js/app.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/clipboard.min.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-search.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-sharing.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-fontsettings.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-bookdown.js"></script>
+<script src="libs/gitbook-2.6.7/js/jquery.highlight.js"></script>
+<script src="libs/gitbook-2.6.7/js/plugin-clipboard.js"></script>
+<link href="libs/anchor-sections-1.1.0/anchor-sections.css" rel="stylesheet" />
+<link href="libs/anchor-sections-1.1.0/anchor-sections-hash.css" rel="stylesheet" />
+<script src="libs/anchor-sections-1.1.0/anchor-sections.js"></script>
+
+
+<style type="text/css">
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
+</style>
+
+<style type="text/css">
+  
+  div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+</style>
+
+</head>
+
+<body>
+
+
+
+<!--bookdown:title:start-->
+<div id="header">
+<h1 class="title">Couscous: A Practical Guide to Causal Inference</h1>
+<p class="author"><em>Theo Obadiah Teguh</em></p>
+<p class="date"><em>2023-12-26</em></p>
+</div>
+<!--bookdown:title:end-->
+
+<!--bookdown:toc:start-->
+  <div class="book without-animation with-summary font-size-2 font-family-1" data-basepath=".">
+
+    <div class="book-summary">
+      <nav role="navigation">
+<!--bookdown:toc2:start-->
+<ul>
+<li><a href="#r-markdown" id="toc-r-markdown"><span class="toc-section-number">0.1</span> R Markdown</a></li>
+<li><a href="#including-plots" id="toc-including-plots"><span class="toc-section-number">0.2</span> Including Plots</a></li>
+<li><a href="#setup" id="toc-setup"><span class="toc-section-number">0.3</span> Setup</a></li>
+<li><a href="#question-1" id="toc-question-1"><span class="toc-section-number">0.4</span> Question 1</a>
+<ul>
+<li><a href="#simple-linear-regression-model" id="toc-simple-linear-regression-model"><span class="toc-section-number">0.4.1</span> Simple Linear Regression Model</a></li>
+</ul></li>
+<li><a href="#question-2" id="toc-question-2"><span class="toc-section-number">0.5</span> Question 2</a>
+<ul>
+<li><a href="#multiple-linear-regression-model" id="toc-multiple-linear-regression-model"><span class="toc-section-number">0.5.1</span> Multiple Linear Regression Model</a></li>
+</ul></li>
+<li><a href="#question-3" id="toc-question-3"><span class="toc-section-number">0.6</span> Question 3</a>
+<ul>
+<li><a href="#multiple-linear-regression-model-with-interaction-variables" id="toc-multiple-linear-regression-model-with-interaction-variables"><span class="toc-section-number">0.6.1</span> Multiple Linear Regression Model with Interaction Variables</a></li>
+</ul></li>
+<li><a href="#question-4" id="toc-question-4"><span class="toc-section-number">0.7</span> Question 4</a>
+<ul>
+<li><a href="#putting-it-all-together" id="toc-putting-it-all-together"><span class="toc-section-number">0.7.1</span> Putting it All Together</a></li>
+</ul></li>
+<li><a href="#section-1-conceptual-questions" id="toc-section-1-conceptual-questions"><span class="toc-section-number">0.8</span> Section 1 (Conceptual Questions)</a>
+<ul>
+<li><a href="#the-effect-of-online-education" id="toc-the-effect-of-online-education"><span class="toc-section-number">0.8.1</span> The Effect of Online Education</a></li>
+</ul></li>
+<li><a href="#section-2-applied-problems" id="toc-section-2-applied-problems"><span class="toc-section-number">0.9</span> Section 2 (Applied Problems)</a>
+<ul>
+<li><a href="#setup-1" id="toc-setup-1"><span class="toc-section-number">0.9.1</span> Setup</a></li>
+<li><a href="#question-1-1" id="toc-question-1-1"><span class="toc-section-number">0.9.2</span> Question 1</a></li>
+<li><a href="#question-2-1" id="toc-question-2-1"><span class="toc-section-number">0.9.3</span> Question 2</a></li>
+<li><a href="#question-3-1" id="toc-question-3-1"><span class="toc-section-number">0.9.4</span> Question 3</a></li>
+<li><a href="#question-4-1" id="toc-question-4-1"><span class="toc-section-number">0.9.5</span> Question 4</a></li>
+</ul></li>
+<li><a href="#section-3-critical-thinking" id="toc-section-3-critical-thinking"><span class="toc-section-number">0.10</span> Section 3 (Critical Thinking)</a></li>
+<li><a href="#section-1-conceptual-questions-1" id="toc-section-1-conceptual-questions-1"><span class="toc-section-number">0.11</span> Section 1: Conceptual Questions</a>
+<ul>
+<li><a href="#question-1-2" id="toc-question-1-2"><span class="toc-section-number">0.11.1</span> Question 1</a></li>
+<li><a href="#question-2-2" id="toc-question-2-2"><span class="toc-section-number">0.11.2</span> Question 2</a></li>
+<li><a href="#question-3-2" id="toc-question-3-2"><span class="toc-section-number">0.11.3</span> Question 3</a></li>
+</ul></li>
+<li><a href="#section-2-applied-problems-1" id="toc-section-2-applied-problems-1"><span class="toc-section-number">0.12</span> Section 2: Applied Problems</a>
+<ul>
+<li><a href="#question-1-iv-regression-with-simulated-data" id="toc-question-1-iv-regression-with-simulated-data"><span class="toc-section-number">0.12.1</span> Question 1 (IV Regression with Simulated Data)</a></li>
+<li><a href="#question-2-colonial-origins-of-comparative-development-ajr" id="toc-question-2-colonial-origins-of-comparative-development-ajr"><span class="toc-section-number">0.12.2</span> Question 2 (Colonial Origins of Comparative Development, AJR)</a></li>
+</ul></li>
+</ul>
+<!--bookdown:toc2:end-->
+      </nav>
+    </div>
+
+    <div class="book-body">
+      <div class="body-inner">
+        <div class="book-header" role="navigation">
+          <h1>
+            <i class="fa fa-circle-o-notch fa-spin"></i><a href="./">Couscous: A Practical Guide to Causal Inference</a>
+          </h1>
+        </div>
+
+        <div class="page-wrapper" tabindex="-1" role="main">
+          <div class="page-inner">
+
+            <section class="normal" id="section-">
+<!--bookdown:toc:end-->
+<!--bookdown:body:start-->
+<div id="r-markdown" class="section level2 hasAnchor" number="0.1">
+<h2 class="hasAnchor"><span class="header-section-number">0.1</span> R Markdown<a href="#r-markdown" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <a href="http://rmarkdown.rstudio.com" class="uri">http://rmarkdown.rstudio.com</a>.</p>
+<p>When you click the <strong>Knit</strong> button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:</p>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" tabindex="-1"></a><span class="fu">summary</span>(cars)</span></code></pre></div>
+<pre><code>##      speed           dist       
+##  Min.   : 4.0   Min.   :  2.00  
+##  1st Qu.:12.0   1st Qu.: 26.00  
+##  Median :15.0   Median : 36.00  
+##  Mean   :15.4   Mean   : 42.98  
+##  3rd Qu.:19.0   3rd Qu.: 56.00  
+##  Max.   :25.0   Max.   :120.00</code></pre>
+</div>
+<div id="including-plots" class="section level2 hasAnchor" number="0.2">
+<h2 class="hasAnchor"><span class="header-section-number">0.2</span> Including Plots<a href="#including-plots" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<p>You can also embed plots, for example:</p>
+<p><img src="_main_files/figure-html/pressure-1.png" width="672" /></p>
+<p>Note that the <code>echo = FALSE</code> parameter was added to the code chunk to prevent printing of the R code that generated the plot.</p>
+<!--chapter:end:index.Rmd-->
+</div>
+<div id="setup" class="section level2 hasAnchor" number="0.3">
+<h2 class="hasAnchor"><span class="header-section-number">0.3</span> Setup<a href="#setup" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+</div>
+<div id="question-1" class="section level2 hasAnchor" number="0.4">
+<h2 class="hasAnchor"><span class="header-section-number">0.4</span> Question 1<a href="#question-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="simple-linear-regression-model" class="section level3 hasAnchor" number="0.4.1">
+<h3 class="hasAnchor"><span class="header-section-number">0.4.1</span> Simple Linear Regression Model<a href="#simple-linear-regression-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="question-2" class="section level2 hasAnchor" number="0.5">
+<h2 class="hasAnchor"><span class="header-section-number">0.5</span> Question 2<a href="#question-2" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="multiple-linear-regression-model" class="section level3 hasAnchor" number="0.5.1">
+<h3 class="hasAnchor"><span class="header-section-number">0.5.1</span> Multiple Linear Regression Model<a href="#multiple-linear-regression-model" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="question-3" class="section level2 hasAnchor" number="0.6">
+<h2 class="hasAnchor"><span class="header-section-number">0.6</span> Question 3<a href="#question-3" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="multiple-linear-regression-model-with-interaction-variables" class="section level3 hasAnchor" number="0.6.1">
+<h3 class="hasAnchor"><span class="header-section-number">0.6.1</span> Multiple Linear Regression Model with Interaction Variables<a href="#multiple-linear-regression-model-with-interaction-variables" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="question-4" class="section level2 hasAnchor" number="0.7">
+<h2 class="hasAnchor"><span class="header-section-number">0.7</span> Question 4<a href="#question-4" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="putting-it-all-together" class="section level3 hasAnchor" number="0.7.1">
+<h3 class="hasAnchor"><span class="header-section-number">0.7.1</span> Putting it All Together<a href="#putting-it-all-together" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<!--chapter:end:01-intro.Rmd-->
+</div>
+</div>
+<div id="section-1-conceptual-questions" class="section level2 hasAnchor" number="0.8">
+<h2 class="hasAnchor"><span class="header-section-number">0.8</span> Section 1 (Conceptual Questions)<a href="#section-1-conceptual-questions" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="the-effect-of-online-education" class="section level3 hasAnchor" number="0.8.1">
+<h3 class="hasAnchor"><span class="header-section-number">0.8.1</span> The Effect of Online Education<a href="#the-effect-of-online-education" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="section-2-applied-problems" class="section level2 hasAnchor" number="0.9">
+<h2 class="hasAnchor"><span class="header-section-number">0.9</span> Section 2 (Applied Problems)<a href="#section-2-applied-problems" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="setup-1" class="section level3 hasAnchor" number="0.9.1">
+<h3 class="hasAnchor"><span class="header-section-number">0.9.1</span> Setup<a href="#setup-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="question-1-1" class="section level3 hasAnchor" number="0.9.2">
+<h3 class="hasAnchor"><span class="header-section-number">0.9.2</span> Question 1<a href="#question-1-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="average-treatment-effect-ate" class="section level4 hasAnchor" number="0.9.2.1">
+<h4 class="hasAnchor"><span class="header-section-number">0.9.2.1</span> Average Treatment Effect (ATE)<a href="#average-treatment-effect-ate" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+</div>
+<div id="question-2-1" class="section level3 hasAnchor" number="0.9.3">
+<h3 class="hasAnchor"><span class="header-section-number">0.9.3</span> Question 2<a href="#question-2-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="individual-treatment-effect-ite-and-average-treatment-effect-on-the-treated-att" class="section level4 hasAnchor" number="0.9.3.1">
+<h4 class="hasAnchor"><span class="header-section-number">0.9.3.1</span> Individual Treatment Effect (ITE) and Average Treatment effect on the Treated (ATT)<a href="#individual-treatment-effect-ite-and-average-treatment-effect-on-the-treated-att" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+</div>
+<div id="question-3-1" class="section level3 hasAnchor" number="0.9.4">
+<h3 class="hasAnchor"><span class="header-section-number">0.9.4</span> Question 3<a href="#question-3-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="question-4-1" class="section level3 hasAnchor" number="0.9.5">
+<h3 class="hasAnchor"><span class="header-section-number">0.9.5</span> Question 4<a href="#question-4-1" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="section-3-critical-thinking" class="section level2 hasAnchor" number="0.10">
+<h2 class="hasAnchor"><span class="header-section-number">0.10</span> Section 3 (Critical Thinking)<a href="#section-3-critical-thinking" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<!--chapter:end:02-rct.Rmd-->
+</div>
+<div id="section-1-conceptual-questions-1" class="section level2 hasAnchor" number="0.11">
+<h2 class="hasAnchor"><span class="header-section-number">0.11</span> Section 1: Conceptual Questions<a href="#section-1-conceptual-questions-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="question-1-2" class="section level3 hasAnchor" number="0.11.1">
+<h3 class="hasAnchor"><span class="header-section-number">0.11.1</span> Question 1<a href="#question-1-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="question-2-2" class="section level3 hasAnchor" number="0.11.2">
+<h3 class="hasAnchor"><span class="header-section-number">0.11.2</span> Question 2<a href="#question-2-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+<div id="question-3-2" class="section level3 hasAnchor" number="0.11.3">
+<h3 class="hasAnchor"><span class="header-section-number">0.11.3</span> Question 3<a href="#question-3-2" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+</div>
+</div>
+<div id="section-2-applied-problems-1" class="section level2 hasAnchor" number="0.12">
+<h2 class="hasAnchor"><span class="header-section-number">0.12</span> Section 2: Applied Problems<a href="#section-2-applied-problems-1" class="anchor-section" aria-label="Anchor link to header"></a></h2>
+<div id="question-1-iv-regression-with-simulated-data" class="section level3 hasAnchor" number="0.12.1">
+<h3 class="hasAnchor"><span class="header-section-number">0.12.1</span> Question 1 (IV Regression with Simulated Data)<a href="#question-1-iv-regression-with-simulated-data" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="part-a-simulating-data-for-iv-regression" class="section level4 hasAnchor" number="0.12.1.1">
+<h4 class="hasAnchor"><span class="header-section-number">0.12.1.1</span> Part A (Simulating Data for IV Regression)<a href="#part-a-simulating-data-for-iv-regression" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="part-b-ordinary-least-squares" class="section level4 hasAnchor" number="0.12.1.2">
+<h4 class="hasAnchor"><span class="header-section-number">0.12.1.2</span> Part B (Ordinary Least Squares)<a href="#part-b-ordinary-least-squares" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="part-c-two-stage-least-squares-by-hand" class="section level4 hasAnchor" number="0.12.1.3">
+<h4 class="hasAnchor"><span class="header-section-number">0.12.1.3</span> Part C (Two Stage Least Squares by Hand)<a href="#part-c-two-stage-least-squares-by-hand" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="part-d-iv-regression" class="section level4 hasAnchor" number="0.12.1.4">
+<h4 class="hasAnchor"><span class="header-section-number">0.12.1.4</span> Part D (IV Regression)<a href="#part-d-iv-regression" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+</div>
+<div id="question-2-colonial-origins-of-comparative-development-ajr" class="section level3 hasAnchor" number="0.12.2">
+<h3 class="hasAnchor"><span class="header-section-number">0.12.2</span> Question 2 (Colonial Origins of Comparative Development, AJR)<a href="#question-2-colonial-origins-of-comparative-development-ajr" class="anchor-section" aria-label="Anchor link to header"></a></h3>
+<div id="part-a-background" class="section level4 hasAnchor" number="0.12.2.1">
+<h4 class="hasAnchor"><span class="header-section-number">0.12.2.1</span> Part A (Background)<a href="#part-a-background" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="part-b-ols-regression" class="section level4 hasAnchor" number="0.12.2.2">
+<h4 class="hasAnchor"><span class="header-section-number">0.12.2.2</span> Part B (OLS Regression)<a href="#part-b-ols-regression" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="part-c-iv-regression" class="section level4 hasAnchor" number="0.12.2.3">
+<h4 class="hasAnchor"><span class="header-section-number">0.12.2.3</span> Part C (IV Regression)<a href="#part-c-iv-regression" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+</div>
+<div id="part-d-critique" class="section level4 hasAnchor" number="0.12.2.4">
+<h4 class="hasAnchor"><span class="header-section-number">0.12.2.4</span> Part D (Critique)<a href="#part-d-critique" class="anchor-section" aria-label="Anchor link to header"></a></h4>
+<!--chapter:end:03-iv.Rmd-->
+</div>
+</div>
+</div>
+<!--bookdown:body:end-->
+            </section>
+
+          </div>
+        </div>
+      </div>
+<!--bookdown:link_prev-->
+<!--bookdown:link_next-->
+    </div>
+  </div>
+<!--bookdown:config-->
+
+</body>
+
+</html>
