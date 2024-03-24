@@ -1,4 +1,7 @@
 # Instrumental Variables {#iv}
+<center>
+![](~/Desktop/Projects/Couscous/images/workinprogress.jpeg)
+</center>
 ## Framework and Assumptions
 
 **Assumptions**   

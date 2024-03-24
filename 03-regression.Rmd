@@ -1,4 +1,7 @@
 # Statistics and Regression with R {#regression}
+<center>
+![](~/Desktop/Projects/Couscous/images/workinprogress.jpeg)
+</center>
 
 Before we start doing any analysis, let's setup our working directory. Moreover,
 because the data sets we'll be working with are relatively small, we can just

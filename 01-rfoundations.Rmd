@@ -1,8 +1,8 @@
 # R Foundations {#rfoundations}
+<center>
+![](~/Desktop/Projects/Couscous/images/underconstruction.png)
+</center>
 
-## Basic Syntax
-
-## Visualization with R {#rfoundations}
-
-## Visualization with ggplot2 {#rfoundations}
-
+- Basic Syntax
+- Visualization with R {#rfoundations}
+- Visualization with ggplot2 {#rfoundations}

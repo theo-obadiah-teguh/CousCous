@@ -1,6 +1,8 @@
 # Statistical Foundations {#sfoundations}
+<center>
+![](~/Desktop/Projects/Couscous/images/underconstruction.png)
+</center>
 
-## P-Values {#sfoundations}
-
-## Hypothesis Testing {#sfoundations}
+- P-Values {#sfoundations}
+- Hypothesis Testing {#sfoundations}
 

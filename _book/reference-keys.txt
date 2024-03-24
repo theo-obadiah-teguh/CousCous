@@ -12,7 +12,6 @@ tab:unnamed-chunk-46
 tab:unnamed-chunk-47
 tab:unnamed-chunk-48
 rfoundations
-basic-syntax
 sfoundations
 regression
 linear-regression
